@@ -70,7 +70,7 @@ namespace NeatParser
         /// <param name="args">Arguments for the editor.</param>
         internal void Edit(ILayoutEditor editor, string args)
         {
-            CurrentColumns = editor.Edit(DefinedColumns, args);
+            CurrentColumns = editor.Edit(this, args);
         }
 
         /// <summary>

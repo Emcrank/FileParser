@@ -10,9 +10,9 @@ namespace NeatParser
         /// <summary>
         /// Returns a collection of columns after the edit logic has been applied.
         /// </summary>
-        /// <param name="allDefinedColumns">All definited columns</param>
+        /// <param name="layout">All definied columns</param>
         /// <param name="args">Argument string for the layout editor.</param>
         /// <returns></returns>
-        IList<Column> Edit(IList<Column> allDefinedColumns, string args);
+        IList<Column> Edit(Layout layout, string args);
     }
 }
