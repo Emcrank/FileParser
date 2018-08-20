@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace FileParser
+namespace NeatParser
 {
     /// <summary>
     /// Extension class for string builder.

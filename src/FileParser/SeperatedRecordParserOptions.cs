@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FileParser
+namespace NeatParser
 {
     /// <summary>
     /// Options class for the File Reader.

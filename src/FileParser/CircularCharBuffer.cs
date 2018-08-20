@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace FileParser
+namespace NeatParser
 {
     /// <summary>
     /// Circular buffer in which chars drop off the end when buffer is at max capacity.

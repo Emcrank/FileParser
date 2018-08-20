@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.IO;
 
-namespace FileParser
+namespace NeatParser
 {
     /// <summary>
     /// Class that represents a column that you do not care about parsing.

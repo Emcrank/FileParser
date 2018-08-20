@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace FileParser
+namespace NeatParser
 {
     /// <summary>
     /// Base class for a column definition.

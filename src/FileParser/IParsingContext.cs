@@ -1,4 +1,4 @@
-﻿namespace FileParser
+﻿namespace NeatParser
 {
     public interface IParsingContext
     {

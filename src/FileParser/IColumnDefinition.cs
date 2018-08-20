@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace FileParser
+﻿namespace NeatParser
 {
     /// <summary>
     /// Interface for column definition.

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using static System.FormattableString;
 
-namespace FileParser
+namespace NeatParser
 {
     /// <summary>
     /// Static class that will parse a record using a defined layout.
@@ -46,7 +45,7 @@ namespace FileParser
             catch (ArgumentException ex)
             {
                 throw new FileParserException(
-                    Invariant($"An error occured parsing value for column {column.Definition.ColumnName}."), ex);
+                    FormattableString.Invariant($"An error occured parsing value for column {column.Definition.ColumnName}."), ex);
             }
         }
 
@@ -62,7 +61,7 @@ namespace FileParser
             catch (ArgumentException ex)
             {
                 throw new FileParserException(
-                    Invariant($"An error occured parsing value for dummy column {column.Definition.ColumnName}."), ex);
+                    FormattableString.Invariant($"An error occured parsing value for dummy column {column.Definition.ColumnName}."), ex);
             }
 
             return true;
@@ -83,7 +82,7 @@ namespace FileParser
             catch (FileParserException ex)
             {
                 throw new FileParserException(
-                    Invariant(
+                    FormattableString.Invariant(
                         $"An error occured parsing value for layout editor column {column.Definition.ColumnName}."),
                     ex);
             }
@@ -95,7 +94,7 @@ namespace FileParser
             catch (FileParserException ex)
             {
                 throw new FileParserException(
-                    Invariant(
+                    FormattableString.Invariant(
                         $"An error occured editing layout using layout editor column {column.Definition.ColumnName}."),
                     ex);
             }

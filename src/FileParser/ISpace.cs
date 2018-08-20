@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace FileParser
+namespace NeatParser
 {
     /// <summary>
     /// Interface for space. Represents a horizontal space within a record.

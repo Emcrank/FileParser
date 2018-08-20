@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace FileParser
+namespace NeatParser
 {
     /// <summary>
     /// Parser class that should be used to parse files that have records with a seperator. Default

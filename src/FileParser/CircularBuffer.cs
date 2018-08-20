@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace FileParser
+namespace NeatParser
 {
     /// <summary>
     /// Generic abstract circular buffer class in which items drop off the end when buffer reaches

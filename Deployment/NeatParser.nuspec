@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0"?>
 <package>
   <metadata>
-    <id>FileParser</id>
+    <id>NeatParser</id>
     <version>1.0.1</version>
     <authors>Aaron Todd</authors>
     <owners>Aaron Todd</owners>
+    <projectUrl></projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A library for parsing files.</description>
     <releaseNotes></releaseNotes>

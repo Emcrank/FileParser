@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FileParser
+namespace NeatParser
 {
     public class Layout
     {

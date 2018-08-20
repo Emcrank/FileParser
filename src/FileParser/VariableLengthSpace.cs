@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 
-namespace FileParser
+namespace NeatParser
 {
     public class VariableLengthSpace : ISpace
     {

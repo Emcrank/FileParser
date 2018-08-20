@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FileParser
+namespace NeatParser
 {
     /// <summary>
     /// Event args for OnRecordRead event.

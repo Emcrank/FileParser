@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace FileParser
+namespace NeatParser
 {
     public class CustomBooleanColumn : ColumnDefinition<bool>
     {

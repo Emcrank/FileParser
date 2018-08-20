@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace FileParser
+namespace NeatParser
 {
     public interface ILayoutEditor
     {

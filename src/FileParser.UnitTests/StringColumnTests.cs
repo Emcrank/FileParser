@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace FileParser.UnitTests
+namespace NeatParser.UnitTests
 {
     [TestClass]
     public class StringColumnTests

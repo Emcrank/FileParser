@@ -1,4 +1,4 @@
-﻿namespace FileParser.UnitTests
+﻿namespace NeatParser.UnitTests
 {
     public static class LayoutFactory
     {

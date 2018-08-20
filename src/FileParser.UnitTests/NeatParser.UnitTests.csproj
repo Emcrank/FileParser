@@ -6,8 +6,8 @@
     <ProjectGuid>{AC58E241-F9F4-40CA-B1C4-32C5173495F4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FileParser.UnitTests</RootNamespace>
-    <AssemblyName>FileParser.UnitTests</AssemblyName>
+    <RootNamespace>NeatParser.UnitTests</RootNamespace>
+    <AssemblyName>NeatParser.UnitTests</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -63,9 +63,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FileParser\FileParser.csproj">
+    <ProjectReference Include="..\FileParser\NeatParser.csproj">
       <Project>{13ad6054-0db4-4434-8d7f-5a09502f7fad}</Project>
-      <Name>FileParser</Name>
+      <Name>NeatParser</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

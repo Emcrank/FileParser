@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace FileParser
+namespace NeatParser
 {
     /// <summary>
     /// An exception thrown when an issue has occured during file parser process.

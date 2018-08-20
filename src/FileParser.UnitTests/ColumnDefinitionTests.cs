@@ -1,7 +1,6 @@
-﻿using FileParser;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace FileParser.UnitTests
+namespace NeatParser.UnitTests
 {
     [TestClass]
     public class ColumnDefinitionTests

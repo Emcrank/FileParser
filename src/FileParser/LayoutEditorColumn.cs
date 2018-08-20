@@ -1,8 +1,7 @@
 ﻿using System;
-using System.ComponentModel;
 using System.IO;
 
-namespace FileParser
+namespace NeatParser
 {
     public class LayoutEditorColumn : ColumnDefinition<string>
     {

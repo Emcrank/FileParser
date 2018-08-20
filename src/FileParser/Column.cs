@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FileParser
+namespace NeatParser
 {
     /// <summary>
     /// Class to represent a column within a file.

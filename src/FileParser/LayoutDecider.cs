@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FileParser
+namespace NeatParser
 {
     /// <summary>
     /// Class that can apply rules to determine which layout should be used for the read row.

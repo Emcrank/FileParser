@@ -1,4 +1,4 @@
-﻿namespace FileParser
+﻿namespace NeatParser
 {
     /// <summary>
     /// Extension class for string.

@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("FileParser.UnitTests")]
+[assembly: AssemblyTitle("NeatParser.UnitTests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Computershare")]
-[assembly: AssemblyProduct("FileParser.UnitTests")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("NeatParser.UnitTests")]
 [assembly: AssemblyCopyright("Copyright © Computershare 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

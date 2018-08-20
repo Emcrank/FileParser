@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace FileParser
+namespace NeatParser
 {
     /// <summary>
     /// Class that represents a container which allows the record values to be retrieved.
