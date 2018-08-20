@@ -8,3 +8,9 @@
 /src/FileParser.UnitTests/obj/Debug
 /src/FileParser/bin/Debug
 /src/FileParser.UnitTests/bin/Debug
+/Deployment/Push.cmd
+*.nupkg
+/src/FileParser/bin/Release
+/src/FileParser/obj/Release
+/src/FileParser.UnitTests/bin/Release
+/src/FileParser.UnitTests/obj/Release

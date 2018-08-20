@@ -12,6 +12,6 @@
     <tags>File parsing library</tags>
   </metadata>
   <files>
-    <file src="bin\Release\FileParser.dll" target="lib"/>
+    <file src="..\src\FileParser\bin\Release\FileParser.dll" target="lib\net472"/>
   </files>
 </package>
