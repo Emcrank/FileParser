@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>NeatParser</id>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <authors>Aaron Todd</authors>
     <owners>Aaron Todd</owners>
     <projectUrl>https://github.com/Emcrank/NeatParser</projectUrl>
