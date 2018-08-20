@@ -6,10 +6,13 @@ namespace NeatParser
 {
     public class Layout
     {
+        /// <summary>
+        ///  Used as a holding list for all the columns assigned at compile time.
+        /// </summary>
         private readonly IList<Column> definedColumns = new List<Column>();
 
         /// <summary>
-        /// Used as a holding list for all the columns assigned at compile time.
+        /// Returns a copy of the columns which were assigned at compile time.
         /// </summary>
         public IList<Column> DefinedColumns => definedColumns.ToList();
         
