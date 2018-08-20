@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace NeatParser
@@ -39,10 +40,10 @@ namespace NeatParser
         {
             try
             {
-                string snippedData = column.Space.SnipData(column.Layout, dataBuffer);
+                string snippedData = column.Space.SnipData(column, dataBuffer);
                 return column.Parse(snippedData);
             }
-            catch (ArgumentException ex)
+            catch (FileParserException ex)
             {
                 throw new FileParserException(
                     FormattableString.Invariant($"An error occured parsing value for column {column.Definition.ColumnName}."), ex);
@@ -56,9 +57,9 @@ namespace NeatParser
 
             try
             {
-                column.Space.SnipData(column.Layout, dataBuffer);
+                column.Space.SnipData(column, dataBuffer);
             }
-            catch (ArgumentException ex)
+            catch (FileParserException ex)
             {
                 throw new FileParserException(
                     FormattableString.Invariant($"An error occured parsing value for dummy column {column.Definition.ColumnName}."), ex);
@@ -72,20 +73,7 @@ namespace NeatParser
             if (!column.Definition.IsLayoutEditor)
                 return false;
 
-            string layoutEditorArgs;
-
-            try
-            {
-                string snippedData = column.Space.SnipData(column.Layout, dataBuffer);
-                layoutEditorArgs = column.Parse(snippedData).ToString();
-            }
-            catch (FileParserException ex)
-            {
-                throw new FileParserException(
-                    FormattableString.Invariant(
-                        $"An error occured parsing value for layout editor column {column.Definition.ColumnName}."),
-                    ex);
-            }
+            string layoutEditorArgs = ParseValue(column, dataBuffer).ToString();
 
             try
             {
@@ -95,7 +83,7 @@ namespace NeatParser
             {
                 throw new FileParserException(
                     FormattableString.Invariant(
-                        $"An error occured editing layout using layout editor column {column.Definition.ColumnName}."),
+                        $"An error occured editing the layout using layout editor from column {column.Definition.ColumnName}."),
                     ex);
             }
 

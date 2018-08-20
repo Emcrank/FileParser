@@ -26,10 +26,10 @@ namespace NeatParser
         /// <summary>
         /// Snips down the dataBuffer and returns the string for this space.
         /// </summary>
-        /// <param name="layout">Layout</param>
+        /// <param name="column">Column for the record</param>
         /// <param name="dataBuffer">Data buffer</param>
         /// <returns>The string data that belongs in this space.</returns>
-        public string SnipData(Layout layout, StringBuilder dataBuffer)
+        public string SnipData(Column column, StringBuilder dataBuffer)
         {
             int lengthOfLengthField = maxLengthOfField.ToString().Length;
 
@@ -40,7 +40,7 @@ namespace NeatParser
             }
             catch(Exception ex) when(ex is OverflowException || ex is FormatException || ex is ArgumentException)
             {
-                throw new InvalidDataException("Unable to extract field from data buffer.", ex);
+                throw new FileParserException("Unable to extract field from data buffer.", ex);
             }
         }
     }

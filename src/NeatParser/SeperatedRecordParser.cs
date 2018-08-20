@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using static System.FormattableString;
 
 namespace NeatParser
 {
@@ -107,8 +108,16 @@ namespace NeatParser
 
         private void GetRecordValues(StringBuilder recordDataBuffer)
         {
-            recordValues = RecordValueParser.ParseValues(layoutDecider.Current, recordDataBuffer);
-            context.LogicalRecordNumber++;
+            context.ActualRecordNumber++;
+
+            try
+            {
+                recordValues = RecordValueParser.ParseValues(layoutDecider.Current, recordDataBuffer);
+            }
+            catch(FileParserException ex)
+            {
+                throw new FileParserException(Invariant($"An error occured parsing record number {context.ActualRecordNumber}."), ex);
+            }
         }
 
         private void InvokeOnRecordParseError(StringBuilder lineData, Exception ex)

@@ -5,7 +5,7 @@
         /// <summary>
         /// Represents a number for records read. (Not including skipped).
         /// </summary>
-        public int LogicalRecordNumber { get; set; }
+        public int ActualRecordNumber { get; set; }
 
         /// <summary>
         /// Represents a number for records read. (Including skipped)
