@@ -1,0 +1,7 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/FileParser/obj/Debug
+/FileParser/FileParser_Local.nuspec
+/FileParser.UnitTests/obj/Debug

@@ -1,0 +1,108 @@
+﻿using System;
+using System.IO;
+
+namespace FileParser
+{
+    /// <summary>
+    /// Base class for a column definition.
+    /// </summary>
+    /// <typeparam name="T">Type of column</typeparam>
+    public class ColumnDefinition<T> : IColumnDefinition
+    {
+        /// <summary>
+        /// Gets or sets the column name.
+        /// </summary>
+        public string ColumnName { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value whether or not this column is a dummy column.
+        /// </summary>
+        public virtual bool IsDummy { get; set; } = false;
+
+        /// <summary>
+        /// Gets or sets the IsLayoutEdito flag.
+        /// </summary>
+        public virtual bool IsLayoutEditor { get; } = false;
+
+        /// <summary>
+        /// Gets or sets the layout editor for the column.
+        /// </summary>
+        public ILayoutEditor LayoutEditor { get; protected set; }
+
+        /// <summary>
+        /// Gets or sets a value on whether or not the value should be trimmed after parsing before converting.
+        /// </summary>
+        public virtual TrimOptions TrimOption { get; set; } = TrimOptions.Trim;
+
+        /// <summary>
+        /// Constructs an instance of <see cref="ColumnDefinition{T}"/> with a random column name.
+        /// </summary>
+        public ColumnDefinition() : this(Path.GetRandomFileName()) { }
+
+        /// <summary>
+        /// Constructs an instance of <see cref="ColumnDefinition{T}"/> with the specified column name.
+        /// </summary>
+        /// <param name="columnName"></param>
+        public ColumnDefinition(string columnName)
+        {
+            if (string.IsNullOrWhiteSpace(columnName))
+                throw new ArgumentNullException(nameof(columnName));
+
+            ColumnName = columnName;
+        }
+
+        /// <summary>
+        /// Parses the value given into object.
+        /// </summary>
+        /// <param name="value">Value to parse</param>
+        /// <returns>Parsed value</returns>
+        public object Parse(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return null;
+
+            string trimmedValue = PerformTrimming(value);
+            return OnParse(trimmedValue);
+        }
+
+        /// <summary>
+        /// Internal implementation of the Parse method.
+        /// </summary>
+        /// <param name="value">Value to parse</param>
+        /// <returns>Parsed value</returns>
+        /// <exception cref="FileParserException">Throws this exception when issue occurs.</exception>
+        protected virtual T OnParse(string value)
+        {
+            try
+            {
+                return (T)Convert.ChangeType(value, typeof(T));
+            }
+            catch (Exception ex) when (ex is InvalidCastException || ex is FormatException)
+            {
+                return default(T);
+            }
+            catch (Exception ex) when (ex is OverflowException || ex is ArgumentNullException)
+            {
+                throw new FileParserException(ex);
+            }
+        }
+
+        private string PerformTrimming(string value)
+        {
+            switch (TrimOption)
+            {
+                case TrimOptions.Trim:
+                    return value.Trim();
+
+                case TrimOptions.LeftTrim:
+                    return value.TrimLeading();
+
+                case TrimOptions.RightTrim:
+                    return value.TrimTrail();
+
+                default:
+                    return value;
+            }
+        }
+    }
+}

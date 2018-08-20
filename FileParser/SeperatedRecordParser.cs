@@ -1,0 +1,182 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+
+namespace FileParser
+{
+    /// <summary>
+    /// Parser class that should be used to parse files that have records with a seperator. Default
+    /// seperator is Environment.NewLine.
+    /// </summary>
+    public class SeperatedRecordParser
+    {
+        public IParsingContext Context => context;
+
+        private bool IsEndOfReader => reader.Peek() < 0;
+        private readonly ParsingContext context = new ParsingContext();
+        private readonly LayoutDecider layoutDecider;
+        private readonly SeperatedRecordParserOptions options;
+        private readonly TextReader reader;
+        private IReadOnlyList<object> recordValues;
+
+        public event EventHandler<RecordParseErrorEventArgs> OnRecordParseError;
+
+        public event EventHandler<RecordReadEventArgs> OnRecordRead;
+
+        /// <summary>
+        /// Constructs a new instance of the <see cref="SeperatedRecordParser"/> using a
+        /// <see cref="LayoutDecider"/> instance.
+        /// </summary>
+        /// <param name="reader">Reader</param>
+        /// <param name="layoutDecider">Layout decider</param>
+        /// <param name="options">Parser options</param>
+        public SeperatedRecordParser(TextReader reader, LayoutDecider layoutDecider,
+            SeperatedRecordParserOptions options)
+        {
+            if (reader == null)
+                throw new ArgumentNullException(nameof(reader));
+
+            if (layoutDecider == null)
+                throw new ArgumentNullException(nameof(layoutDecider));
+
+            if (options == null)
+                throw new ArgumentNullException(nameof(options));
+
+            this.reader = reader;
+            this.layoutDecider = layoutDecider;
+            this.options = options;
+
+            for (int i = 1; i <= options.SkipFirst; i++) Skip();
+        }
+
+        /// <summary>
+        /// Constructs a new instance of the <see cref="SeperatedRecordParser"/> using a
+        /// <see cref="Layout"/> instance.
+        /// </summary>
+        /// <param name="reader">Reader</param>
+        /// <param name="layout">layout to use</param>
+        /// <param name="options">Parser options</param>
+        public SeperatedRecordParser(TextReader reader, Layout layout, SeperatedRecordParserOptions options)
+            : this(reader, new LayoutDecider(layout), options) { }
+
+        /// <summary>
+        /// Constructs a new instance of the <see cref="SeperatedRecordParser"/> using a
+        /// <see cref="Layout"/> instance using the default options.
+        /// </summary>
+        /// <param name="reader">Reader</param>
+        /// <param name="layout">layout to use</param>
+        public SeperatedRecordParser(TextReader reader, Layout layout)
+            : this(reader, new LayoutDecider(layout), new SeperatedRecordParserOptions()) { }
+
+        /// <summary>
+        /// Constructs a new instance of the <see cref="SeperatedRecordParser"/> using a
+        /// <see cref="LayoutDecider"/> instance using the default options.
+        /// </summary>
+        /// <param name="reader">Reader</param>
+        /// <param name="layoutDecider">layout decider</param>
+        public SeperatedRecordParser(TextReader reader, LayoutDecider layoutDecider)
+            : this(reader, layoutDecider, new SeperatedRecordParserOptions()) { }
+
+        /// <summary>
+        /// Advances the reader to the next record.
+        /// </summary>
+        /// <returns>
+        /// True if record has been read. False if has reached end of reader or an incomplete record.
+        /// </returns>
+        public bool Read()
+        {
+            try
+            {
+                return ReadInternal();
+            }
+            catch (Exception ex) when (ex is IOException)
+            {
+                throw new FileParserException(ex);
+            }
+        }
+
+        /// <summary>
+        /// Takes the values for the current record being processed.
+        /// </summary>
+        /// <returns>A <see cref="RecordValueContainer"/> instance in which the values will exist.</returns>
+        public RecordValueContainer Take()
+        {
+            return new RecordValueContainer(layoutDecider.Current, recordValues ?? new List<object>());
+        }
+
+        private void GetRecordValues(StringBuilder recordDataBuffer)
+        {
+            recordValues = RecordValueParser.ParseValues(layoutDecider.Current, recordDataBuffer);
+            context.LogicalRecordNumber++;
+        }
+
+        private void InvokeOnRecordParseError(StringBuilder lineData, Exception ex)
+        {
+            OnRecordParseError?.Invoke(this, new RecordParseErrorEventArgs(lineData.ToString(), ex));
+        }
+
+        private RecordReadEventArgs InvokeOnRecordReadHandler(StringBuilder lineData)
+        {
+            var eventArgs = new RecordReadEventArgs(lineData.ToString());
+            OnRecordRead?.Invoke(this, eventArgs);
+            return eventArgs;
+        }
+
+        private bool ReadInternal()
+        {
+            return !IsEndOfReader && ReadNextRecord();
+        }
+
+        private bool ReadNextRecord()
+        {
+            var recordDataBuffer = ReadUntilNextSeperator();
+
+            if(recordDataBuffer.Length == 0)
+                return false;
+            if(string.IsNullOrWhiteSpace(recordDataBuffer.ToString()))
+                return false;
+                
+            if (InvokeOnRecordReadHandler(recordDataBuffer).ShouldSkip)
+                return ReadNextRecord();
+
+            layoutDecider.Decide(recordDataBuffer);
+
+            try
+            {
+                GetRecordValues(recordDataBuffer);
+            }
+            catch (FileParserException ex)
+            {
+                InvokeOnRecordParseError(recordDataBuffer, ex);
+            }
+
+            return true;
+        }
+
+        private StringBuilder ReadUntilNextSeperator()
+        {
+            context.PhysicalRecordNumber++;
+            var seperatorBuffer = new CircularCharBuffer(options.RecordSeperator.Length);
+            int partialLength = options.RecordSeperator.Length - 1;
+            var currentStringBuffer = new StringBuilder();
+
+            while (!IsEndOfReader)
+            {
+                char nextChar = (char)reader.Read();
+
+                if (seperatorBuffer.PushAndMatch(nextChar, options.RecordSeperator))
+                    return currentStringBuffer.Remove(currentStringBuffer.Length - partialLength, partialLength);
+
+                currentStringBuffer.Append(nextChar);
+            }
+
+            return currentStringBuffer;
+        }
+
+        private void Skip()
+        {
+            ReadUntilNextSeperator();
+        }
+    }
+}
