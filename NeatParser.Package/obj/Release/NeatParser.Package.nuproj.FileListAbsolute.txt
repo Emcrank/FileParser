@@ -1,3 +1,0 @@
-C:\GitHub\Repositories\NeatParser\NeatParser.Package\bin\Release\NeatParser.1.0.0.0.nupkg
-C:\GitHub\Repositories\NeatParser\NeatParser.Package\obj\Release\NeatParser.nuspec
-C:\GitHub\Repositories\NeatParser\NeatParser.Package\obj\Release\NeatParser.1.0.0.0.nupkg
