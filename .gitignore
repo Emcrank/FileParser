@@ -2,6 +2,7 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/FileParser/obj/Debug
-/FileParser/FileParser_Local.nuspec
-/FileParser.UnitTests/obj/Debug
+*.suo
+/src/FileParser/obj/Debug
+/src/FileParser/FileParser_Local.nuspec
+/src/FileParser.UnitTests/obj/Debug
