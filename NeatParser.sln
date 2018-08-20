@@ -5,14 +5,13 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deployment", "Deployment", "{E411E3DD-E5D0-45E1-A8E9-EBE4CBA11BBD}"
 	ProjectSection(SolutionItems) = preProject
+		Deployment\NeatParser.nuspec = Deployment\NeatParser.nuspec
 		Deployment\Pack Package.cmd = Deployment\Pack Package.cmd
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeatParser", "src\NeatParser\NeatParser.csproj", "{13AD6054-0DB4-4434-8D7F-5A09502F7FAD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeatParser.UnitTests", "src\NeatParser.UnitTests\NeatParser.UnitTests.csproj", "{AC58E241-F9F4-40CA-B1C4-32C5173495F4}"
-EndProject
-Project("{FF286327-C783-4F7A-AB73-9BCBAD0D4460}") = "NeatParser.Package", "NeatParser.Package\NeatParser.Package.nuproj", "{34AF018C-073F-499C-8D47-392A06217E92}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,8 +27,6 @@ Global
 		{AC58E241-F9F4-40CA-B1C4-32C5173495F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC58E241-F9F4-40CA-B1C4-32C5173495F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC58E241-F9F4-40CA-B1C4-32C5173495F4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{34AF018C-073F-499C-8D47-392A06217E92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{34AF018C-073F-499C-8D47-392A06217E92}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
