@@ -22,9 +22,9 @@
         {
             var layout = new Layout();
             layout.AddColumn(new ColumnDefinition<string>("FileIdentifier"), new FixedLengthSpace(9));
-            layout.AddColumn(new ColumnDefinition<string>("FirstData"), new VariableLengthSpace(100));
-            layout.AddColumn(new ColumnDefinition<string>("SecondData"), new VariableLengthSpace(100));
-            layout.AddColumn(new ColumnDefinition<string>("ThirdData"), new VariableLengthSpace(100));
+            layout.AddColumn(new ColumnDefinition<string>("FirstData"), new VariableLengthSpace(100, false));
+            layout.AddColumn(new ColumnDefinition<string>("SecondData"), new VariableLengthSpace(100, false));
+            layout.AddColumn(new ColumnDefinition<string>("ThirdData"), new VariableLengthSpace(3));
             return layout;
         }
     }
