@@ -4,10 +4,17 @@ using System.Text;
 
 namespace NeatParser
 {
+    /// <summary>
+    /// Class to represent a variable space within a file which is determined by a field length tag before it.
+    /// </summary>
     public class VariableLengthSpace : ISpace
     {
         private readonly int maxLengthOfField;
 
+        /// <summary>
+        /// Constructs an instance of the <see cref="VariableLengthSpace"/> class with the specified max length of the field.
+        /// </summary>
+        /// <param name="maxLengthOfField"></param>
         public VariableLengthSpace(int maxLengthOfField)
         {
             if(maxLengthOfField == 0)
@@ -16,6 +23,12 @@ namespace NeatParser
             this.maxLengthOfField = maxLengthOfField;
         }
 
+        /// <summary>
+        /// Snips down the dataBuffer and returns the string for this space.
+        /// </summary>
+        /// <param name="layout">Layout</param>
+        /// <param name="dataBuffer">Data buffer</param>
+        /// <returns>The string data that belongs in this space.</returns>
         public string SnipData(Layout layout, StringBuilder dataBuffer)
         {
             int lengthOfLengthField = maxLengthOfField.ToString().Length;

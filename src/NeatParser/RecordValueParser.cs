@@ -19,7 +19,7 @@ namespace NeatParser
         {
             var parsedValues = new List<object>();
 
-            for (int columnIndex = 0; columnIndex < layout.TotalColumns; columnIndex++)
+            for (int columnIndex = 0; columnIndex < layout.TotalCurrentColumns; columnIndex++)
             {
                 var column = layout[columnIndex];
 

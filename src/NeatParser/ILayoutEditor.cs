@@ -2,13 +2,17 @@
 
 namespace NeatParser
 {
+    /// <summary>
+    /// Interface for the layout editor. Allows a column to edit the layout mid-parse.
+    /// </summary>
     public interface ILayoutEditor
     {
         /// <summary>
-        /// Returns a collection of columns with the logic applied.
+        /// Returns a collection of columns after the edit logic has been applied.
         /// </summary>
-        /// <param name="allColumns"></param>
+        /// <param name="allDefinedColumns">All definited columns</param>
+        /// <param name="args">Argument string for the layout editor.</param>
         /// <returns></returns>
-        IList<Column> Edit(IList<Column> allColumns, string args);
+        IList<Column> Edit(IList<Column> allDefinedColumns, string args);
     }
 }

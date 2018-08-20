@@ -9,37 +9,37 @@ namespace NeatParser
         /// <summary>
         /// Used as a holding list for all the columns assigned at compile time.
         /// </summary>
-        private readonly IList<Column> allColumns = new List<Column>();
+        public readonly IList<Column> DefinedColumns = new List<Column>();
 
         /// <summary>
-        /// Gets a value of the total columns defined in the layout.
+        /// Gets a value of the total current columns defined in the layout.
         /// </summary>
-        public int TotalColumns => Columns.Count;
+        public int TotalCurrentColumns => CurrentColumns.Count;
 
         /// <summary>
         /// Gets a collection of column instances that make up this layout.
         /// </summary>
-        internal IList<Column> Columns { get; private set; } = new List<Column>();
+        internal IList<Column> CurrentColumns { get; private set; } = new List<Column>();
 
         /// <summary>
-        /// Gets a collection of non dummy column instances that make up this layout.
+        /// Gets a collection of non dummy current column instances that make up this layout.
         /// </summary>
-        internal IList<Column> NonDummyColumns => Columns.Where(c => !c.Definition.IsDummy).ToList();
+        internal IList<Column> NonDummyColumns => CurrentColumns.Where(c => !c.Definition.IsDummy).ToList();
 
         /// <summary>
-        /// Indexer for Columns
+        /// Gets a column from the CurrentColumns collection with the specified index.
         /// </summary>
         /// <param name="columnIndex">Index of column</param>
         /// <returns>Column at specified index</returns>
-        internal Column this[int columnIndex] => Columns[columnIndex];
+        internal Column this[int columnIndex] => CurrentColumns[columnIndex];
 
         /// <summary>
-        /// Indexer for Columns
+        /// Gets a column from the CurrentColumns collection with the specified column name.
         /// </summary>
         /// <param name="columnName">Name of column</param>
         /// <returns>Column with specified name</returns>
         internal Column this[string columnName] =>
-            Columns.FirstOrDefault(c => c.Definition.ColumnName.Equals(columnName, StringComparison.Ordinal));
+            CurrentColumns.FirstOrDefault(c => c.Definition.ColumnName.Equals(columnName, StringComparison.Ordinal));
 
         /// <summary>
         /// Adds a column to the layout with the specified column definition and space.
@@ -59,8 +59,8 @@ namespace NeatParser
                     "You have already defined a column with this name. Column names must be unique per layout.");
 
             var column = new Column(this, columnDefinition, space);
-            Columns.Add(column);
-            allColumns.Add(column);
+            CurrentColumns.Add(column);
+            DefinedColumns.Add(column);
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace NeatParser
         /// <param name="args">Arguments for the editor.</param>
         internal void Edit(ILayoutEditor editor, string args)
         {
-            Columns = editor.Edit(allColumns, args);
+            CurrentColumns = editor.Edit(DefinedColumns, args);
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace NeatParser
         /// </summary>
         internal void Reset()
         {
-            Columns = allColumns.ToList();
+            CurrentColumns = DefinedColumns.ToList();
         }
     }
 }
