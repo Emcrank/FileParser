@@ -3,14 +3,14 @@
 ################################################################################
 
 *.suo
-/src/FileParser/obj/Debug
-/src/FileParser/FileParser_Local.nuspec
-/src/FileParser.UnitTests/obj/Debug
-/src/FileParser/bin/Debug
-/src/FileParser.UnitTests/bin/Debug
+/src/NeatParser/obj/Debug
+/src/NeatParser/FileParser_Local.nuspec
+/src/NeatParser.UnitTests/obj/Debug
+/src/NeatParser/bin/Debug
+/src/NeatParser.UnitTests/bin/Debug
 /Deployment/Push.cmd
 *.nupkg
-/src/FileParser/bin/Release
-/src/FileParser/obj/Release
-/src/FileParser.UnitTests/bin/Release
-/src/FileParser.UnitTests/obj/Release
+/src/NeatParser/bin/Release
+/src/NeatParser/obj/Release
+/src/NeatParser.UnitTests/bin/Release
+/src/NeatParser.UnitTests/obj/Release

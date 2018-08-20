@@ -62,12 +62,6 @@
     <Compile Include="SeperatedRecordParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\FileParser\NeatParser.csproj">
-      <Project>{13ad6054-0db4-4434-8d7f-5a09502f7fad}</Project>
-      <Name>NeatParser</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
