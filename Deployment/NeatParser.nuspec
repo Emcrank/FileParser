@@ -5,9 +5,9 @@
     <version>1.0.1</version>
     <authors>Aaron Todd</authors>
     <owners>Aaron Todd</owners>
-    <projectUrl></projectUrl>
+    <projectUrl>https://github.com/Emcrank/NeatParser</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>A library for parsing files.</description>
+    <description>An easy to use library for parsing files.</description>
     <releaseNotes></releaseNotes>
     <copyright>Copyright 2018</copyright>
     <tags>File parsing library</tags>
