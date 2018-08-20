@@ -6,11 +6,13 @@ namespace NeatParser
 {
     public class Layout
     {
+        private readonly IList<Column> definedColumns = new List<Column>();
+
         /// <summary>
         /// Used as a holding list for all the columns assigned at compile time.
         /// </summary>
-        public readonly IList<Column> DefinedColumns = new List<Column>();
-
+        public IList<Column> DefinedColumns => definedColumns.ToList();
+        
         /// <summary>
         /// Gets a value of the total current columns defined in the layout.
         /// </summary>
@@ -60,7 +62,7 @@ namespace NeatParser
 
             var column = new Column(this, columnDefinition, space);
             CurrentColumns.Add(column);
-            DefinedColumns.Add(column);
+            definedColumns.Add(column);
         }
 
         /// <summary>
@@ -78,7 +80,7 @@ namespace NeatParser
         /// </summary>
         internal void Reset()
         {
-            CurrentColumns = DefinedColumns.ToList();
+            CurrentColumns = DefinedColumns;
         }
     }
 }
