@@ -13,6 +13,6 @@
     <tags>File parsing library</tags>
   </metadata>
   <files>
-    <file src="..\src\FileParser\bin\Release\FileParser.dll" target="lib\net472"/>
+    <file src="..\src\NeatParser\bin\Release\NeatParser.dll" target="lib\net472"/>
   </files>
 </package>
