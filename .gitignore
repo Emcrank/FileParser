@@ -6,3 +6,5 @@
 /src/FileParser/obj/Debug
 /src/FileParser/FileParser_Local.nuspec
 /src/FileParser.UnitTests/obj/Debug
+/src/FileParser/bin/Debug
+/src/FileParser.UnitTests/bin/Debug

@@ -7,6 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileParser", "src\FileParse
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileParser.UnitTests", "src\FileParser.UnitTests\FileParser.UnitTests.csproj", "{AC58E241-F9F4-40CA-B1C4-32C5173495F4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deployment", "Deployment", "{E411E3DD-E5D0-45E1-A8E9-EBE4CBA11BBD}"
+	ProjectSection(SolutionItems) = preProject
+		Deployment\FileParser.nuspec = Deployment\FileParser.nuspec
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
