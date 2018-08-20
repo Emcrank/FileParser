@@ -1,0 +1,18 @@
+﻿<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>NeatParser</id>
+    <version>1.0.5</version>
+    <authors>Aaron Todd</authors>
+    <owners>Aaron Todd</owners>
+    <projectUrl>https://github.com/Emcrank/NeatParser</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>An easy to use library for parsing files.</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2018</copyright>
+    <tags>File parsing library</tags>
+  </metadata>
+  <files>
+    <file src="bin\Release\NeatParser.dll" target="lib\net472"/>
+  </files>
+</package>
