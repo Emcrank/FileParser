@@ -21,7 +21,8 @@
         public static Layout GetVariableLayout()
         {
             var layout = new Layout();
-            layout.AddColumn(new ColumnDefinition<string>("FileIdentifier"), new FixedLengthSpace(9));
+            var column = new ColumnDefinition<string>("FileIdentifier");
+            layout.AddColumn(column, new FixedLengthSpace(9));
             layout.AddColumn(new ColumnDefinition<string>("FirstData"), new VariableLengthSpace(100, false));
             layout.AddColumn(new ColumnDefinition<string>("SecondData"), new VariableLengthSpace(100, false));
             layout.AddColumn(new ColumnDefinition<string>("ThirdData"), new VariableLengthSpace(3));

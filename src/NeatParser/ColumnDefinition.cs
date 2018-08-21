@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 
 namespace NeatParser
@@ -28,6 +30,11 @@ namespace NeatParser
         /// Gets or sets the layout editor for the column.
         /// </summary>
         public ILayoutEditor LayoutEditor { get; protected set; }
+
+        /// <summary>
+        /// Gets the column metadata dictionary.
+        /// </summary>
+        public IDictionary Metadata => new Dictionary<object, object>();
 
         /// <summary>
         /// Gets or sets a value on whether or not the value should be trimmed after parsing before converting.

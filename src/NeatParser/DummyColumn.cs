@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 
@@ -28,6 +30,11 @@ namespace NeatParser
         /// Gets the layout editor.
         /// </summary>
         public ILayoutEditor LayoutEditor => null;
+
+        /// <summary>
+        /// Gets the metadata dictionary.
+        /// </summary>
+        public IDictionary Metadata => new Dictionary<object, object>();
 
         /// <summary>
         /// Gets the TrimValue value.

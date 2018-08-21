@@ -1,4 +1,6 @@
-﻿namespace NeatParser
+﻿using System.Collections;
+
+namespace NeatParser
 {
     /// <summary>
     /// Interface for column definition.
@@ -24,6 +26,11 @@
         /// Gets the layout editor.
         /// </summary>
         ILayoutEditor LayoutEditor { get; }
+
+        /// <summary>
+        /// Gets the column metadata dictionary.
+        /// </summary>
+        IDictionary Metadata { get; }
 
         /// <summary>
         /// Parses text and converts if necessary.
