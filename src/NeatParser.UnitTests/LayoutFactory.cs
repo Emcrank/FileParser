@@ -28,5 +28,127 @@
             layout.AddColumn(new ColumnDefinition<string>("ThirdData"), new VariableLengthSpace(3));
             return layout;
         }
+
+        internal const string SortCodeColumnName = "BeneficiaryCreditInstitution";
+        internal const string Narrative1ColumnName = "OriginatingCustomerAccountName";
+        internal const string Narrative2ColumnName = "BeneficiaryCustomerAccountName";
+        internal const string AmountColumnName = "Amount";
+        internal const string PaymentDayColumnName = "SettlementDate";
+        internal const string AccountNumberColumnName = "BeneficiaryCustomerAccountNumber";
+        internal const string ColumnAssignedNumber = "ColumnNumber";
+
+        public static Layout CreateLayoutEditorLayout()
+        {
+            var layout = new Layout();
+            layout.AddColumn(
+                new LayoutEditorColumn(new HexadecimalLayoutEditor(1, 64)).AddMetadata(ColumnAssignedNumber, 0),
+                new FixedLengthSpace(16));
+            layout.AddColumn(
+                new LayoutEditorColumn(new HexadecimalLayoutEditor(65, 128)).AddMetadata(ColumnAssignedNumber, 1),
+                new FixedLengthSpace(16));
+            layout.AddColumn(
+                new DummyColumn("ProcessingCode").AddMetadata(ColumnAssignedNumber, 3),
+                new FixedLengthSpace(6));
+            layout.AddColumn(
+                new DummyColumn("OriginalAmount").AddMetadata(ColumnAssignedNumber, 4),
+                new FixedLengthSpace(14));
+            layout.AddColumn(
+                new ColumnDefinition<int>(AmountColumnName).AddMetadata(ColumnAssignedNumber, 6),
+                new FixedLengthSpace(14));
+            layout.AddColumn(
+                new DummyColumn("ExchangeRate").AddMetadata(ColumnAssignedNumber, 10),
+                new FixedLengthSpace(12));
+            layout.AddColumn(
+                new DummyColumn("DateSent").AddMetadata(ColumnAssignedNumber, 12),
+                new FixedLengthSpace(8));
+            layout.AddColumn(
+                new DateTimeColumn(PaymentDayColumnName, "yyyyMMdd").AddMetadata(ColumnAssignedNumber, 15),
+                new FixedLengthSpace(8));
+            layout.AddColumn(
+                new DummyColumn("ActionCode").AddMetadata(ColumnAssignedNumber, 26),
+                new FixedLengthSpace(4));
+            layout.AddColumn(
+                new DummyColumn("ProcessedAsynchronously").AddMetadata(ColumnAssignedNumber, 27),
+                new FixedLengthSpace(1));
+            layout.AddColumn(
+                new DummyColumn("SettlementCycleId").AddMetadata(ColumnAssignedNumber, 29),
+                new FixedLengthSpace(3));
+            layout.AddColumn(
+                new DummyColumn("TransactionReferenceNumber").AddMetadata(ColumnAssignedNumber, 31),
+                new VariableLengthSpace(2));
+            layout.AddColumn(
+                new DummyColumn("SubmittingMember").AddMetadata(ColumnAssignedNumber, 32),
+                new VariableLengthSpace(2));
+            layout.AddColumn(
+                new StringColumn(AccountNumberColumnName).AddMetadata(ColumnAssignedNumber, 35),
+                new VariableLengthSpace(2));
+            layout.AddColumn(
+                new DummyColumn("OriginatingCreditInstitution").AddMetadata(ColumnAssignedNumber, 42),
+                new FixedLengthSpace(11));
+            layout.AddColumn(
+                new DummyColumn("OriginatingCustomerAccountNumber").AddMetadata(ColumnAssignedNumber, 43),
+                new VariableLengthSpace(2));
+            layout.AddColumn(
+                new DummyColumn("ChargingInformation").AddMetadata(ColumnAssignedNumber, 46),
+                new VariableLengthSpace(3));
+            layout.AddColumn(
+                new DummyColumn("OriginalCurrency").AddMetadata(ColumnAssignedNumber, 49),
+                new FixedLengthSpace(3));
+            layout.AddColumn(
+                new DummyColumn("Currency").AddMetadata(ColumnAssignedNumber, 51),
+                new FixedLengthSpace(3));
+            layout.AddColumn(
+                new DummyColumn("PaymentData").AddMetadata(ColumnAssignedNumber, 61),
+                new VariableLengthSpace(3));
+            layout.AddColumn(
+                new DummyColumn("EndToEndReference").AddMetadata(ColumnAssignedNumber, 62),
+                new VariableLengthSpace(3));
+            layout.AddColumn(
+                new DummyColumn("NumericReference").AddMetadata(ColumnAssignedNumber, 71),
+                new FixedLengthSpace(4));
+            layout.AddColumn(
+                new DummyColumn("FileId").AddMetadata(ColumnAssignedNumber, 72),
+                new VariableLengthSpace(3));
+            layout.AddColumn(
+                new StringColumn(SortCodeColumnName).AddMetadata(ColumnAssignedNumber, 95),
+                new VariableLengthSpace(2));
+            layout.AddColumn(
+                new DummyColumn("SendingFPSInstitution").AddMetadata(ColumnAssignedNumber, 98),
+                new FixedLengthSpace(11));
+            layout.AddColumn(
+                new DummyColumn("ReceivingMember").AddMetadata(ColumnAssignedNumber, 99),
+                new VariableLengthSpace(2));
+            layout.AddColumn(
+                new StringColumn(Narrative1ColumnName).AddMetadata(ColumnAssignedNumber, 116),
+                new VariableLengthSpace(2));
+            layout.AddColumn(
+                new DummyColumn("OriginatingCustomerAccountAddress").AddMetadata(ColumnAssignedNumber, 117),
+                new VariableLengthSpace(3));
+            layout.AddColumn(
+                new StringColumn(Narrative2ColumnName).AddMetadata(ColumnAssignedNumber, 118),
+                new VariableLengthSpace(3));
+            layout.AddColumn(
+                new DummyColumn("BeneficiaryCustomerAccountAddress").AddMetadata(ColumnAssignedNumber, 119),
+                new VariableLengthSpace(3));
+            layout.AddColumn(
+                new DummyColumn("ReferenceInformation").AddMetadata(ColumnAssignedNumber, 120),
+                new VariableLengthSpace(3));
+            layout.AddColumn(
+                new DummyColumn("RemittanceInformation").AddMetadata(ColumnAssignedNumber, 121),
+                new VariableLengthSpace(3));
+            layout.AddColumn(
+                new DummyColumn("RegulatoryReporting").AddMetadata(ColumnAssignedNumber, 122),
+                new VariableLengthSpace(3));
+            layout.AddColumn(
+                new DummyColumn("PaymentReturnCode").AddMetadata(ColumnAssignedNumber, 126),
+                new VariableLengthSpace(3));
+            layout.AddColumn(
+                new DummyColumn("ReturnedPaymentFPID").AddMetadata(ColumnAssignedNumber, 127),
+                new VariableLengthSpace(3));
+            layout.AddColumn(
+                new DummyColumn("MessageAuthenticationCode").AddMetadata(ColumnAssignedNumber, 128),
+                new FixedLengthSpace(16));
+            return layout;
+        }
     }
 }

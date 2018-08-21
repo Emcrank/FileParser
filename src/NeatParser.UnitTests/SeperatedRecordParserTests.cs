@@ -26,6 +26,37 @@ namespace NeatParser.UnitTests
                 .Append(@"FILE#0010001B021FAKE DATA - 123456789006MOREFA")
             .ToString();
 
+        private static string LayoutEditorTestData =>
+            @"A412002B2060200000000002600015013010100000000000540020180807201808061003184000000003827894950710000040800000199110799     080045603682606134001110799     080100000607S YZXTH018XXXXYYYY & XILJLPK01017469176080000000000000000|A412002B2060200000000002600015013010100000000001250020180807201808061003186000000003777399610710000040800027303309912     080023097582606134001309912     080100000606E POIU016XYXYXYXY ZZZXXXX0131315838910-020000000000000000|A412002B20602004000000026000154130101000000000011030201808072018080610031800156280632BBFHDCF0710000110832315907090128     085687823882601800156280632BBFHDCF06134013090128     080100000617POIUY CONSTERDINE012BBG MORT A/C012013/32315907017000000000000000000000000000000000|A412002B2060200000000002600015013010100000000000632220180807201808061003181000000003763492230710000040898401510309233     080266130182606134013309233     080100000610J A YUUOIU018XYXYXYXY & ZZZXXXX009JA YUUOIU0000000000000000";
+
+        [TestMethod]
+        public void CanParseRecordsWithLayoutEditorColumn()
+        {
+            using (var reader = new StringReader(LayoutEditorTestData))
+            {
+                var options = new SeperatedRecordParserOptions() { RecordSeperator = "|" };
+                var parser = new SeperatedRecordParser(reader, LayoutFactory.CreateLayoutEditorLayout(), options);
+
+                Assert.IsTrue(parser.Read());
+                var values = parser.Take();
+                Assert.AreEqual(5400, values[0]);
+                Assert.AreEqual(new DateTime(2018, 8, 6), values[1]);
+                Assert.AreEqual("00000199", values[2]);
+                Assert.AreEqual("134001", values[LayoutFactory.SortCodeColumnName]);
+                Assert.AreEqual("S YZXTH", values[4]);
+                Assert.AreEqual("XXXXYYYY & XILJLPK", values[LayoutFactory.Narrative2ColumnName]);
+
+                Assert.IsTrue(parser.Read());
+                values = parser.Take();
+                Assert.AreEqual(12500, values[0]);
+                Assert.AreEqual(new DateTime(2018, 8, 6), values[1]);
+                Assert.AreEqual("00027303", values[2]);
+                Assert.AreEqual("134001", values[LayoutFactory.SortCodeColumnName]);
+                Assert.AreEqual("E POIU", values[4]);
+                Assert.AreEqual("XYXYXYXY ZZZXXXX", values[LayoutFactory.Narrative2ColumnName]);
+            }
+        }
+
         [TestMethod]
         public void Parser_CanSkip_UsingOptions()
         {

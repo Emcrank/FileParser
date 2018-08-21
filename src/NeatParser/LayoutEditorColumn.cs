@@ -11,6 +11,7 @@ namespace NeatParser
 
         /// <summary>
         /// Constructs an instance of <see cref="LayoutEditorColumn"/> class with specified layout editor instance.
+        /// NOTE: This column must come before other columns that may be removed.
         /// </summary>
         public LayoutEditorColumn(ILayoutEditor layoutEditor) : this(Path.GetRandomFileName())
         {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 
@@ -16,9 +17,9 @@ namespace NeatParser
         /// <param name="layout">layout to use</param>
         /// <param name="dataBuffer">String data.</param>
         /// <returns></returns>
-        internal static IReadOnlyList<object> ParseValues(Layout layout, StringBuilder dataBuffer)
+        internal static IReadOnlyDictionary<string, object> ParseValues(Layout layout, StringBuilder dataBuffer)
         {
-            var parsedValues = new List<object>();
+            var parsedValues = new Dictionary<string, object>();
 
             for (int columnIndex = 0; columnIndex < layout.TotalCurrentColumns; columnIndex++)
             {
@@ -30,9 +31,9 @@ namespace NeatParser
                 if (ProcessLayoutEditorColumn(column, dataBuffer))
                     continue;
 
-                parsedValues.Add(ParseValue(column, dataBuffer));
+                parsedValues.Add(column.Definition.ColumnName, ParseValue(column, dataBuffer));
             }
-
+            
             return parsedValues;
         }
 

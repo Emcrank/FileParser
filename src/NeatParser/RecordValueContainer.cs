@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace NeatParser
 {
@@ -10,7 +11,7 @@ namespace NeatParser
         /// <summary>
         /// Gets the collection that exposes the record values.
         /// </summary>
-        public IReadOnlyList<object> RecordValues { get; }
+        public IReadOnlyDictionary<string, object> RecordValues { get; }
 
         private readonly Layout layout;
 
@@ -19,27 +20,16 @@ namespace NeatParser
         /// </summary>
         /// <param name="columnIndex">Index of the column</param>
         /// <returns>Dynamic value of specified column.</returns>
-        public dynamic this[int columnIndex] => RecordValues[columnIndex];
+        public dynamic this[int columnIndex] => RecordValues.Values.ToList()[columnIndex];
 
         /// <summary>
         /// Gets the value that corresponds to the column.
         /// </summary>
         /// <param name="columnName">Name of the column</param>
         /// <returns>Dynamic value of specified column.</returns>
-        public dynamic this[string columnName]
-        {
-            get
-            {
-                var column = layout[columnName];
-                if (column.Definition.IsDummy)
-                    return null;
+        public dynamic this[string columnName] => layout[columnName].Definition.IsDummy ? null : RecordValues[columnName];
 
-                int index = layout.NonDummyColumns.IndexOf(column);
-                return RecordValues[index];
-            }
-        }
-
-        internal RecordValueContainer(Layout layout, IReadOnlyList<object> recordValues)
+        internal RecordValueContainer(Layout layout, IReadOnlyDictionary<string, object> recordValues)
         {
             this.layout = layout;
             RecordValues = recordValues;

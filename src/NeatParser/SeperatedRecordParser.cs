@@ -27,7 +27,7 @@ namespace NeatParser
         private readonly LayoutDecider layoutDecider;
         private readonly SeperatedRecordParserOptions options;
         private readonly TextReader reader;
-        private IReadOnlyList<object> recordValues;
+        private IReadOnlyDictionary<string, object> recordValues;
 
         public event EventHandler<RecordParseErrorEventArgs> OnRecordParseError;
 
@@ -111,7 +111,7 @@ namespace NeatParser
         /// <returns>A <see cref="RecordValueContainer"/> instance in which the values will exist.</returns>
         public RecordValueContainer Take()
         {
-            return new RecordValueContainer(layoutDecider.Current, recordValues ?? new List<object>());
+            return new RecordValueContainer(layoutDecider.Current, recordValues ?? new Dictionary<string, object>());
         }
 
         private void GetRecordValues(StringBuilder recordDataBuffer)

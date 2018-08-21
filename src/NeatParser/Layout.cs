@@ -19,24 +19,24 @@ namespace NeatParser
         /// <summary>
         /// Gets a value of the total current columns defined in the layout.
         /// </summary>
-        public int TotalCurrentColumns => CurrentColumns.Count;
+        public int TotalCurrentColumns => currentColumns.Count;
 
         /// <summary>
         /// Gets a collection of column instances that make up this layout.
         /// </summary>
-        internal IList<Column> CurrentColumns { get; private set; } = new List<Column>();
+        private IList<Column> currentColumns = new List<Column>();
 
         /// <summary>
-        /// Gets a collection of non dummy current column instances that make up this layout.
+        /// Returns a copy of the columns which are currently assigned to the layout.
         /// </summary>
-        internal IList<Column> NonDummyColumns => CurrentColumns.Where(c => !c.Definition.IsDummy).ToList();
+        public IList<Column> CurrentColumns => currentColumns.ToList();
 
         /// <summary>
         /// Gets a column from the CurrentColumns collection with the specified index.
         /// </summary>
         /// <param name="columnIndex">Index of column</param>
         /// <returns>Column at specified index</returns>
-        internal Column this[int columnIndex] => CurrentColumns[columnIndex];
+        internal Column this[int columnIndex] => currentColumns[columnIndex];
 
         /// <summary>
         /// Gets a column from the CurrentColumns collection with the specified column name.
@@ -44,7 +44,7 @@ namespace NeatParser
         /// <param name="columnName">Name of column</param>
         /// <returns>Column with specified name</returns>
         internal Column this[string columnName] =>
-            CurrentColumns.FirstOrDefault(c => c.Definition.ColumnName.Equals(columnName, StringComparison.Ordinal));
+            currentColumns.FirstOrDefault(c => c.Definition.ColumnName.Equals(columnName, StringComparison.Ordinal));
 
         /// <summary>
         /// Adds a column to the layout with the specified column definition and space.
@@ -64,7 +64,7 @@ namespace NeatParser
                     "You have already defined a column with this name. Column names must be unique per layout.");
 
             var column = new Column(this, columnDefinition, space);
-            CurrentColumns.Add(column);
+            currentColumns.Add(column);
             definedColumns.Add(column);
         }
 
@@ -75,7 +75,7 @@ namespace NeatParser
         /// <param name="args">Arguments for the editor.</param>
         internal void Edit(ILayoutEditor editor, string args)
         {
-            CurrentColumns = editor.Edit(this, args);
+            currentColumns = editor.Edit(this, args);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace NeatParser
         /// </summary>
         internal void Reset()
         {
-            CurrentColumns = DefinedColumns;
+            currentColumns = DefinedColumns;
         }
     }
 }

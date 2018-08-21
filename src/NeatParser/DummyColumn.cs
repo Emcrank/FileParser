@@ -34,7 +34,7 @@ namespace NeatParser
         /// <summary>
         /// Gets the metadata dictionary.
         /// </summary>
-        public IDictionary Metadata => new Dictionary<object, object>();
+        public IDictionary Metadata { get; } = new Dictionary<object, object>();
 
         /// <summary>
         /// Gets the TrimValue value.
