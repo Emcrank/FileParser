@@ -21,7 +21,20 @@ namespace NeatParser
         /// <param name="format">Format of the date time string e.g yyyyMMDD</param>
         public DateTimeColumn(string format)
         {
-            if(string.IsNullOrWhiteSpace(format))
+            if (string.IsNullOrWhiteSpace(format))
+                throw new ArgumentNullException(nameof(format));
+
+            this.format = format;
+        }
+
+        /// <summary>
+        /// Constructs a new instance of the <see cref="DateTimeColumn"/> class with specified format and column name.
+        /// </summary>
+        /// <param name="columnName">Name of the column</param>
+        /// <param name="format">Format of the date time string e.g yyyyMMDD</param>
+        public DateTimeColumn(string columnName, string format) : base(columnName)
+        {
+            if (string.IsNullOrWhiteSpace(format))
                 throw new ArgumentNullException(nameof(format));
 
             this.format = format;
