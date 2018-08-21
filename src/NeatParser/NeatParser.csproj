@@ -57,6 +57,7 @@
     <Compile Include="IParsingContext.cs" />
     <Compile Include="ISpace.cs" />
     <Compile Include="LayoutEditorColumn.cs" />
+    <Compile Include="StringColumn.cs" />
     <Compile Include="StringExtensions.cs" />
     <Compile Include="TrimOptions.cs" />
     <Compile Include="ParsingContext.cs" />
