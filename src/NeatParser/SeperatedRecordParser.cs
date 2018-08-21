@@ -12,7 +12,15 @@ namespace NeatParser
     /// </summary>
     public class SeperatedRecordParser
     {
+        /// <summary>
+        /// Gets the IParsingContext which provides contextual information regarding the parsers execution.
+        /// </summary>
         public IParsingContext Context => context;
+
+        /// <summary>
+        /// Gets the layout currently in use.
+        /// </summary>
+        public Layout CurrentLayout => layoutDecider.Current;
 
         private bool IsEndOfReader => reader.Peek() < 0;
         private readonly ParsingContext context = new ParsingContext();
