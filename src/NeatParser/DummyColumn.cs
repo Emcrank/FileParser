@@ -61,5 +61,19 @@ namespace NeatParser
             // Should never be called. Throw NotImplementedException to highlight coding error.
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// Adds metadata to the metadata dictionary for this column.
+        /// </summary>
+        /// <param name="key">The key to add</param>
+        /// <param name="value">The value to add</param>
+        /// <returns>This column definition.</returns>
+        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="NotSupportedException"></exception>
+        public IColumnDefinition AddMetadata(object key, object value)
+        {
+            Metadata.Add(key, value);
+            return this;
+        }
     }
 }

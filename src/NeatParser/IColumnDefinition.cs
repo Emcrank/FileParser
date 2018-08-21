@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 
 namespace NeatParser
 {
@@ -38,5 +39,15 @@ namespace NeatParser
         /// <param name="value">Text to be parsed.</param>
         /// <returns>Parsed value as object.</returns>
         object Parse(string value);
+
+        /// <summary>
+        /// Method to add metadata to the column definition.
+        /// </summary>
+        /// <param name="key">Key</param>
+        /// <param name="value">Value</param>
+        /// <returns>This column definition.</returns>
+        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="NotSupportedException"></exception>
+        IColumnDefinition AddMetadata(object key, object value);
     }
 }

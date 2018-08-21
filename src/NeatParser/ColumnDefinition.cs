@@ -73,6 +73,20 @@ namespace NeatParser
         }
 
         /// <summary>
+        /// Adds metadata to the metadata dictionary for this column.
+        /// </summary>
+        /// <param name="key">The key to add</param>
+        /// <param name="value">The value to add</param>
+        /// <returns>This column definition.</returns>
+        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="NotSupportedException"></exception>
+        public IColumnDefinition AddMetadata(object key, object value)
+        {
+            Metadata.Add(key, value);
+            return this;
+        }
+
+        /// <summary>
         /// Internal implementation of the Parse method.
         /// </summary>
         /// <param name="value">Value to parse</param>
