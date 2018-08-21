@@ -52,7 +52,7 @@
     <Compile Include="ColumnDefinition.cs" />
     <Compile Include="DateTimeColumn.cs" />
     <Compile Include="DummyColumn.cs" />
-    <Compile Include="FileParserException.cs" />
+    <Compile Include="NeatParserException.cs" />
     <Compile Include="ILayoutEditor.cs" />
     <Compile Include="IParsingContext.cs" />
     <Compile Include="ISpace.cs" />

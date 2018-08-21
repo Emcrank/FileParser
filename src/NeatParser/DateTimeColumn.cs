@@ -44,7 +44,7 @@ namespace NeatParser
             }
             catch(Exception ex) when(ex is FormatException || ex is ArgumentNullException)
             {
-                throw new FileParserException(ex);
+                throw new NeatParserException(ex);
             }
         }
     }

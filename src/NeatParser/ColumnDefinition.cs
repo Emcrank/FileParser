@@ -70,7 +70,7 @@ namespace NeatParser
         /// </summary>
         /// <param name="value">Value to parse</param>
         /// <returns>Parsed value</returns>
-        /// <exception cref="FileParserException">Throws this exception when issue occurs.</exception>
+        /// <exception cref="NeatParserException">Throws this exception when issue occurs.</exception>
         protected virtual T OnParse(string value)
         {
             try
@@ -83,7 +83,7 @@ namespace NeatParser
             }
             catch (Exception ex) when (ex is OverflowException || ex is ArgumentNullException)
             {
-                throw new FileParserException(ex);
+                throw new NeatParserException(ex);
             }
         }
 

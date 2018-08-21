@@ -13,7 +13,7 @@ namespace NeatParser
         /// <param name="column">Column for the record.</param>
         /// <param name="dataBuffer">StringBuilder containing data.</param>
         /// <returns>Returns the data that belongs to this space</returns>
-        /// <exception cref="FileParserException">Thrown if something goes wrong.</exception>
+        /// <exception cref="NeatParserException">Thrown if something goes wrong.</exception>
         string SnipData(Column column, StringBuilder dataBuffer);
     }
 }

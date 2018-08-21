@@ -43,9 +43,9 @@ namespace NeatParser
                 string snippedData = column.Space.SnipData(column, dataBuffer);
                 return column.Parse(snippedData);
             }
-            catch (FileParserException ex)
+            catch (NeatParserException ex)
             {
-                throw new FileParserException(
+                throw new NeatParserException(
                     FormattableString.Invariant($"An error occured parsing value for column {column.Definition.ColumnName}."), ex);
             }
         }
@@ -59,9 +59,9 @@ namespace NeatParser
             {
                 column.Space.SnipData(column, dataBuffer);
             }
-            catch (FileParserException ex)
+            catch (NeatParserException ex)
             {
-                throw new FileParserException(
+                throw new NeatParserException(
                     FormattableString.Invariant($"An error occured parsing value for dummy column {column.Definition.ColumnName}."), ex);
             }
 
@@ -79,9 +79,9 @@ namespace NeatParser
             {
                 column.Layout.Edit(column.Definition.LayoutEditor, layoutEditorArgs);
             }
-            catch (FileParserException ex)
+            catch (NeatParserException ex)
             {
-                throw new FileParserException(
+                throw new NeatParserException(
                     FormattableString.Invariant(
                         $"An error occured editing the layout using layout editor from column {column.Definition.ColumnName}."),
                     ex);

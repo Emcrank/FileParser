@@ -93,7 +93,7 @@ namespace NeatParser
             }
             catch (Exception ex) when (ex is IOException)
             {
-                throw new FileParserException(ex);
+                throw new NeatParserException(ex);
             }
         }
 
@@ -114,9 +114,9 @@ namespace NeatParser
             {
                 recordValues = RecordValueParser.ParseValues(layoutDecider.Current, recordDataBuffer);
             }
-            catch(FileParserException ex)
+            catch(NeatParserException ex)
             {
-                throw new FileParserException(Invariant($"An error occured parsing record number {context.ActualRecordNumber}."), ex);
+                throw new NeatParserException(Invariant($"An error occured parsing record number {context.ActualRecordNumber}."), ex);
             }
         }
 
@@ -155,7 +155,7 @@ namespace NeatParser
             {
                 GetRecordValues(recordDataBuffer);
             }
-            catch (FileParserException ex)
+            catch (NeatParserException ex)
             {
                 InvokeOnRecordParseError(recordDataBuffer, ex);
             }

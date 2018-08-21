@@ -34,7 +34,7 @@ namespace NeatParser
             }
             catch (Exception ex) when (ex is OverflowException || ex is FormatException || ex is ArgumentException)
             {
-                throw new FileParserException("Unable to extract field from data buffer.", ex);
+                throw new NeatParserException("Unable to extract field from data buffer.", ex);
             }
         }
     }
