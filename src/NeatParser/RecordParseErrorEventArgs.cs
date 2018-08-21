@@ -8,14 +8,20 @@ namespace NeatParser
     public class RecordParseErrorEventArgs : EventArgs
     {
         /// <summary>
-        /// Exception that caused the error.
+        /// Gets the exception which is the cause of the issue.
         /// </summary>
         public Exception Cause { get; }
 
         /// <summary>
-        /// Holds the line that is read.
+        /// Gets the line that parser last read.
         /// </summary>
         public string LineData { get; }
+
+        /// <summary>
+        /// Gets or sets the value that determines whether the parser
+        /// should rethrow the exception or whether the user has handled it.
+        /// </summary>
+        public bool UserHandled { get; set; }
 
         /// <summary>
         /// Constructor for RecordParseErrorEventArgs.

@@ -120,9 +120,11 @@ namespace NeatParser
             }
         }
 
-        private void InvokeOnRecordParseError(StringBuilder lineData, Exception ex)
+        private RecordParseErrorEventArgs InvokeOnRecordParseError(StringBuilder lineData, Exception ex)
         {
-            OnRecordParseError?.Invoke(this, new RecordParseErrorEventArgs(lineData.ToString(), ex));
+            var eventArgs = new RecordParseErrorEventArgs(lineData.ToString(), ex);
+            OnRecordParseError?.Invoke(this, eventArgs);
+            return eventArgs;
         }
 
         private RecordReadEventArgs InvokeOnRecordReadHandler(StringBuilder lineData)
@@ -145,7 +147,7 @@ namespace NeatParser
                 return false;
             if(string.IsNullOrWhiteSpace(recordDataBuffer.ToString()))
                 return false;
-                
+            
             if (InvokeOnRecordReadHandler(recordDataBuffer).ShouldSkip)
                 return ReadNextRecord();
 
@@ -157,7 +159,9 @@ namespace NeatParser
             }
             catch (NeatParserException ex)
             {
-                InvokeOnRecordParseError(recordDataBuffer, ex);
+                var eventArgs = InvokeOnRecordParseError(recordDataBuffer, ex);
+                if(!eventArgs.UserHandled)
+                    throw;
             }
 
             return true;

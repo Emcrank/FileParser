@@ -168,6 +168,29 @@ namespace NeatParser.UnitTests
                     hasFired = true;
                     Assert.IsNotNull(e.LineData);
                     Assert.IsNotNull(e.Cause);
+                    e.UserHandled = true;
+                };
+
+                Assert.IsTrue(parser.Read());
+                Assert.IsTrue(hasFired);
+            }
+        }
+
+        [ExpectedException(typeof(NeatParserException))]
+        [TestMethod]
+        public void Parser_RethrowsExceptionIfNotUserHandled()
+        {
+            using (var reader = new StringReader(InvalidTestData))
+            {
+                var parser = new SeperatedRecordParser(reader, LayoutFactory.GetBacsDetailLayout());
+
+                bool hasFired = false;
+                parser.OnRecordParseError += (s, e) =>
+                {
+                    hasFired = true;
+                    Assert.IsNotNull(e.LineData);
+                    Assert.IsNotNull(e.Cause);
+                    e.UserHandled = false;
                 };
 
                 Assert.IsTrue(parser.Read());
