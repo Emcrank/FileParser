@@ -50,6 +50,7 @@
     <Compile Include="Column.cs" />
     <Compile Include="CustomBooleanColumn.cs" />
     <Compile Include="ColumnDefinition.cs" />
+    <Compile Include="DateTimeColumn.cs" />
     <Compile Include="DummyColumn.cs" />
     <Compile Include="FileParserException.cs" />
     <Compile Include="ILayoutEditor.cs" />

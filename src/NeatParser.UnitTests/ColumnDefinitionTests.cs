@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NeatParser.UnitTests
 {
@@ -59,6 +60,26 @@ namespace NeatParser.UnitTests
             const string value = "";
 
             Assert.IsNull(new ColumnDefinition<string>().Parse(value));
+        }
+
+        [TestMethod]
+        public void Parse_ReturnsCorrectDate()
+        {
+            const string value = "20180807";
+
+            var parsedValue = new DateTimeColumn("yyyyMMdd").Parse(value);
+
+            Assert.AreEqual(new DateTime(2018, 08, 07), parsedValue);
+        }
+
+        [TestMethod]
+        public void Parse_ReturnsCorrectDateTime()
+        {
+            const string value = "20201210 17:47:09";
+
+            var parsedValue = new DateTimeColumn("yyyyMMdd HH:mm:ss").Parse(value);
+
+            Assert.AreEqual(new DateTime(2020, 12, 10, 17, 47, 09), parsedValue);
         }
     }
 }
