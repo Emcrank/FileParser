@@ -56,7 +56,7 @@ namespace NeatParser
             this.layoutDecider = layoutDecider;
             this.options = options;
 
-            for (int i = 1; i <= options.SkipFirst; i++) Skip();
+            for (int i = 1; i <= options.SkipFirst; i++) SkipRecord();
         }
 
         /// <summary>
@@ -93,11 +93,11 @@ namespace NeatParser
         /// <returns>
         /// True if record has been read. False if has reached end of reader or an incomplete record.
         /// </returns>
-        public bool Read()
+        public bool Next()
         {
             try
             {
-                return ReadInternal();
+                return NextInternal();
             }
             catch (Exception ex) when (ex is IOException)
             {
@@ -142,7 +142,7 @@ namespace NeatParser
             return eventArgs;
         }
 
-        private bool ReadInternal()
+        private bool NextInternal()
         {
             return !IsEndOfReader && ReadNextRecord();
         }
@@ -195,7 +195,7 @@ namespace NeatParser
             return currentStringBuffer;
         }
 
-        private void Skip()
+        private void SkipRecord()
         {
             ReadUntilNextSeperator();
         }

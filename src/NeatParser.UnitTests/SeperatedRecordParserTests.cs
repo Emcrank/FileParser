@@ -37,7 +37,7 @@ namespace NeatParser.UnitTests
                 var options = new SeperatedRecordParserOptions() { RecordSeperator = "|" };
                 var parser = new SeperatedRecordParser(reader, LayoutFactory.CreateLayoutEditorLayout(), options);
 
-                Assert.IsTrue(parser.Read());
+                Assert.IsTrue(parser.Next());
                 var values = parser.Take();
                 Assert.AreEqual(5400, values[0]);
                 Assert.AreEqual(new DateTime(2018, 8, 6), values[1]);
@@ -46,7 +46,7 @@ namespace NeatParser.UnitTests
                 Assert.AreEqual("S YZXTH", values[4]);
                 Assert.AreEqual("XXXXYYYY & XILJLPK", values[LayoutFactory.Narrative2ColumnName]);
 
-                Assert.IsTrue(parser.Read());
+                Assert.IsTrue(parser.Next());
                 values = parser.Take();
                 Assert.AreEqual(12500, values[0]);
                 Assert.AreEqual(new DateTime(2018, 8, 6), values[1]);
@@ -69,7 +69,7 @@ namespace NeatParser.UnitTests
                 };
 
                 var parser = new SeperatedRecordParser(reader, LayoutFactory.GetBacsDetailLayout(), options);
-                Assert.IsTrue(parser.Read());
+                Assert.IsTrue(parser.Next());
 
                 string sortCode = parser.Take()[0];
                 Assert.AreEqual("623187", sortCode);
@@ -88,7 +88,7 @@ namespace NeatParser.UnitTests
                 };
 
                 var parser = new SeperatedRecordParser(reader, LayoutFactory.GetBacsDetailLayout(), options);
-                Assert.IsTrue(parser.Read());
+                Assert.IsTrue(parser.Next());
 
                 var values = parser.Take();
 
@@ -111,8 +111,8 @@ namespace NeatParser.UnitTests
                 var parser = new SeperatedRecordParser(reader, LayoutFactory.GetBacsDetailLayout());
                 parser.OnRecordRead += (s, e) => { e.ShouldSkip = toSkipPrefix.Any(l => e.LineData.StartsWith(l)); };
 
-                Assert.IsTrue(parser.Read());
-                Assert.IsTrue(parser.Read());
+                Assert.IsTrue(parser.Next());
+                Assert.IsTrue(parser.Next());
                 var values = parser.Take();
 
                 Assert.AreEqual("623187", values["SortCode"]);
@@ -136,10 +136,10 @@ namespace NeatParser.UnitTests
                 parser.OnRecordParseError += (s,e) => { throw new InvalidDataException("Failed to parse " + e.LineData, e.Cause); };
 
                 var rowData = new List<RecordValueContainer>();
-                Assert.IsTrue(parser.Read());
+                Assert.IsTrue(parser.Next());
                 rowData.Add(parser.Take());
 
-                Assert.IsTrue(parser.Read());
+                Assert.IsTrue(parser.Next());
                 rowData.Add(parser.Take());
 
                 var values = rowData[0];
@@ -158,7 +158,7 @@ namespace NeatParser.UnitTests
                 Assert.AreEqual("JM071783D DWP SMI", values["RemittersName"]);
                 Assert.AreEqual("888888-88888-08", values["RemittersReferenceNumber"]);
 
-                Assert.IsFalse(parser.Read());
+                Assert.IsFalse(parser.Next());
             }
         }
 
@@ -170,14 +170,14 @@ namespace NeatParser.UnitTests
                 var parser = new SeperatedRecordParser(reader, LayoutFactory.GetVariableLayout());
                 parser.OnRecordParseError += (s, e) => { throw new InvalidDataException("Error parsing " + e.LineData, e.Cause); };
 
-                Assert.IsTrue(parser.Read());
+                Assert.IsTrue(parser.Next());
                 var values = parser.Take();
                 Assert.AreEqual("FILE#0047", values[0]);
                 Assert.AreEqual("A", values[1]);
                 Assert.AreEqual("FAKE DATA - 1234567898451", values[2]);
                 Assert.AreEqual("MOREFAKEDATA", values[3]);
 
-                Assert.IsTrue(parser.Read());
+                Assert.IsTrue(parser.Next());
                 values = parser.Take();
                 Assert.AreEqual("FILE#0010", values[0]);
                 Assert.AreEqual("B", values[1]);
@@ -202,7 +202,7 @@ namespace NeatParser.UnitTests
                     e.UserHandled = true;
                 };
 
-                Assert.IsTrue(parser.Read());
+                Assert.IsTrue(parser.Next());
                 Assert.IsTrue(hasFired);
             }
         }
@@ -224,7 +224,7 @@ namespace NeatParser.UnitTests
                     e.UserHandled = false;
                 };
 
-                Assert.IsTrue(parser.Read());
+                Assert.IsTrue(parser.Next());
                 Assert.IsTrue(hasFired);
             }
         }
@@ -242,7 +242,7 @@ namespace NeatParser.UnitTests
 
                 var rowData = new List<RecordValueContainer>();
 
-                while(parser.Read())
+                while(parser.Next())
                 {
                     rowData.Add(parser.Take());
                 }
