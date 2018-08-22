@@ -81,5 +81,54 @@ namespace NeatParser.UnitTests
 
             Assert.AreEqual(new DateTime(2020, 12, 10, 17, 47, 09), parsedValue);
         }
+
+        [TestMethod]
+        public void Parse_TrimLeftWhitespace()
+        {
+            const string value = "   .   0239088848   ";
+
+            var parsedValue = new StringColumn()
+            {
+                TrimOption = TrimOptions.LeftTrim
+            }.Parse(value);
+
+            Assert.AreEqual(".   0239088848   ", parsedValue);
+        }
+
+        [TestMethod]
+        public void Parse_TrimRightWhitespace()
+        {
+            const string value = "      0239088848 J  ";
+
+            var parsedValue = new StringColumn()
+            {
+                TrimOption = TrimOptions.RightTrim
+            }.Parse(value);
+
+            Assert.AreEqual("      0239088848 J", parsedValue);
+        }
+
+        [TestMethod]
+        public void Parse_TrimsWhitespace()
+        {
+            const string value = "      foo   bar ";
+
+            var parsedValue = new StringColumn()
+            {
+                TrimOption = TrimOptions.Trim
+            }.Parse(value);
+
+            Assert.AreEqual("foo   bar", parsedValue);
+        }
+
+        [TestMethod]
+        public void Parse_OnlyWhitespace()
+        {
+            const string value = "       ";
+
+            var parsedValue = new StringColumn().Parse(value);
+
+            Assert.AreEqual(string.Empty, parsedValue);
+        }
     }
 }

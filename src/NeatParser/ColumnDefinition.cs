@@ -65,7 +65,7 @@ namespace NeatParser
         /// <returns>Parsed value</returns>
         public object Parse(string value)
         {
-            if (string.IsNullOrWhiteSpace(value))
+            if (string.IsNullOrEmpty(value))
                 return null;
 
             string trimmedValue = PerformTrimming(value);
