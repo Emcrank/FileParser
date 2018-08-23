@@ -10,7 +10,7 @@ namespace NeatParser
     ///     Parser class that should be used to parse files that have records with a seperator. Default
     ///     seperator is Environment.NewLine.
     /// </summary>
-    public sealed class SeperatedRecordParser
+    public sealed class NeatParser
     {
         /// <summary>
         ///     Gets the IParsingContext which provides contextual information regarding the parsers execution.
@@ -25,19 +25,19 @@ namespace NeatParser
         private bool IsEndOfReader => reader.Peek() < 0;
         private readonly ParsingContext context = new ParsingContext();
         private readonly LayoutDecider layoutDecider;
-        private readonly SeperatedRecordParserOptions options;
+        private readonly NeatParserOptions options;
         private readonly TextReader reader;
         private IReadOnlyDictionary<string, object> recordValues;
 
         /// <summary>
-        ///     Constructs a new instance of the <see cref="SeperatedRecordParser" /> using a
+        ///     Constructs a new instance of the <see cref="NeatParser" /> using a
         ///     <see cref="LayoutDecider" /> instance.
         /// </summary>
         /// <param name="reader">Reader</param>
         /// <param name="layoutDecider">Layout decider</param>
         /// <param name="options">Parser options</param>
-        public SeperatedRecordParser(TextReader reader, LayoutDecider layoutDecider,
-            SeperatedRecordParserOptions options)
+        public NeatParser(TextReader reader, LayoutDecider layoutDecider,
+            NeatParserOptions options)
         {
             if(reader == null)
                 throw new ArgumentNullException(nameof(reader));
@@ -56,32 +56,32 @@ namespace NeatParser
         }
 
         /// <summary>
-        ///     Constructs a new instance of the <see cref="SeperatedRecordParser" /> using a
+        ///     Constructs a new instance of the <see cref="NeatParser" /> using a
         ///     <see cref="Layout" /> instance.
         /// </summary>
         /// <param name="reader">Reader</param>
         /// <param name="layout">layout to use</param>
         /// <param name="options">Parser options</param>
-        public SeperatedRecordParser(TextReader reader, Layout layout, SeperatedRecordParserOptions options)
+        public NeatParser(TextReader reader, Layout layout, NeatParserOptions options)
             : this(reader, new LayoutDecider(layout), options) { }
 
         /// <summary>
-        ///     Constructs a new instance of the <see cref="SeperatedRecordParser" /> using a
+        ///     Constructs a new instance of the <see cref="NeatParser" /> using a
         ///     <see cref="Layout" /> instance using the default options.
         /// </summary>
         /// <param name="reader">Reader</param>
         /// <param name="layout">layout to use</param>
-        public SeperatedRecordParser(TextReader reader, Layout layout)
-            : this(reader, new LayoutDecider(layout), new SeperatedRecordParserOptions()) { }
+        public NeatParser(TextReader reader, Layout layout)
+            : this(reader, new LayoutDecider(layout), new NeatParserOptions()) { }
 
         /// <summary>
-        ///     Constructs a new instance of the <see cref="SeperatedRecordParser" /> using a
+        ///     Constructs a new instance of the <see cref="NeatParser" /> using a
         ///     <see cref="LayoutDecider" /> instance using the default options.
         /// </summary>
         /// <param name="reader">Reader</param>
         /// <param name="layoutDecider">layout decider</param>
-        public SeperatedRecordParser(TextReader reader, LayoutDecider layoutDecider)
-            : this(reader, layoutDecider, new SeperatedRecordParserOptions()) { }
+        public NeatParser(TextReader reader, LayoutDecider layoutDecider)
+            : this(reader, layoutDecider, new NeatParserOptions()) { }
 
         public event EventHandler<RecordParseErrorEventArgs> OnRecordParseError;
 

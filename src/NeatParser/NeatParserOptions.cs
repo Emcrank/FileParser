@@ -5,7 +5,7 @@ namespace NeatParser
     /// <summary>
     /// Options class for the File Reader.
     /// </summary>
-    public class SeperatedRecordParserOptions
+    public class NeatParserOptions
     {
         /// <summary>
         /// Gets or sets the string that defines the seperator for the records. Default = Environment.NewLine.

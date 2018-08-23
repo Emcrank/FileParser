@@ -54,13 +54,13 @@ namespace NeatParser.UnitTests
         {
             using(var reader = new StringReader(DelimitedTestData))
             {
-                var options = new SeperatedRecordParserOptions {SkipFirst = 1};
+                var options = new NeatParserOptions {SkipFirst = 1};
                 var layout = new Layout("testLayout", "|");
                 layout.AddColumn(new StringColumn("1") {TrimOption = TrimOptions.None}, new FixedLengthSpace(14));
                 layout.AddColumn(new StringColumn("2") {TrimOption = TrimOptions.None}, new FixedLengthSpace(14));
                 layout.AddColumn(new StringColumn("3") {TrimOption = TrimOptions.None}, new FixedLengthSpace(14));
 
-                var parser = new SeperatedRecordParser(reader, layout, options);
+                var parser = new NeatParser(reader, layout, options);
                 var values = parser.TakeNext();
 
                 Assert.AreEqual("  TEST DATA 47", values["1"]);
@@ -82,11 +82,11 @@ namespace NeatParser.UnitTests
         {
             using(var reader = new StringReader(DelimitedTestDataNoTrailingDelimiter))
             {
-                var options = new SeperatedRecordParserOptions {RecordSeperator = " ", SkipFirst = 1};
+                var options = new NeatParserOptions {RecordSeperator = " ", SkipFirst = 1};
                 var layout = LayoutFactory.GetDelimitedLayout();
                 layout.RecordsHaveTrailingDelimiter = false;
 
-                var parser = new SeperatedRecordParser(reader, layout, options);
+                var parser = new NeatParser(reader, layout, options);
                 var values = parser.TakeNext();
 
                 Assert.AreEqual("1COLUMN1", values["1"]);
@@ -112,8 +112,8 @@ namespace NeatParser.UnitTests
         {
             using(var reader = new StringReader(DelimitedTestDataWithTrailingDelimiter))
             {
-                var options = new SeperatedRecordParserOptions {RecordSeperator = " ", SkipFirst = 1};
-                var parser = new SeperatedRecordParser(reader, LayoutFactory.GetDelimitedLayout(), options);
+                var options = new NeatParserOptions {RecordSeperator = " ", SkipFirst = 1};
+                var parser = new NeatParser(reader, LayoutFactory.GetDelimitedLayout(), options);
 
                 var values = parser.TakeNext();
 
@@ -141,7 +141,7 @@ namespace NeatParser.UnitTests
         {
             using(var reader = new StringReader(LayoutEditorIntegerTestData))
             {
-                var parser = new SeperatedRecordParser(reader, LayoutFactory.CreateEditLayoutZeroData());
+                var parser = new NeatParser(reader, LayoutFactory.CreateEditLayoutZeroData());
 
                 Assert.IsTrue(parser.Next());
                 var values = parser.Take();
@@ -155,7 +155,7 @@ namespace NeatParser.UnitTests
         {
             using(var reader = new StringReader(LayoutEditorIntegerTestData))
             {
-                var parser = new SeperatedRecordParser(reader, LayoutFactory.CreateEditLayoutZeroData());
+                var parser = new NeatParser(reader, LayoutFactory.CreateEditLayoutZeroData());
 
                 Assert.IsTrue(parser.Next());
                 var values = parser.Take();
@@ -171,8 +171,8 @@ namespace NeatParser.UnitTests
         {
             using(var reader = new StringReader(LayoutEditorTestData))
             {
-                var options = new SeperatedRecordParserOptions {RecordSeperator = "|"};
-                var parser = new SeperatedRecordParser(reader, LayoutFactory.CreateLayoutEditorLayout(), options);
+                var options = new NeatParserOptions {RecordSeperator = "|"};
+                var parser = new NeatParser(reader, LayoutFactory.CreateLayoutEditorLayout(), options);
 
                 Assert.IsTrue(parser.Next());
                 var values = parser.Take();
@@ -199,13 +199,13 @@ namespace NeatParser.UnitTests
         {
             using(var reader = new StringReader(BacsTestData))
             {
-                var options = new SeperatedRecordParserOptions
+                var options = new NeatParserOptions
                 {
                     RecordSeperator = Environment.NewLine,
                     SkipFirst = 3
                 };
 
-                var parser = new SeperatedRecordParser(reader, LayoutFactory.GetBacsDetailLayout(), options);
+                var parser = new NeatParser(reader, LayoutFactory.GetBacsDetailLayout(), options);
                 Assert.IsTrue(parser.Next());
 
                 string sortCode = parser.Take()["SortCode"];
@@ -218,13 +218,13 @@ namespace NeatParser.UnitTests
         {
             using(var reader = new StringReader(BacsTestData))
             {
-                var options = new SeperatedRecordParserOptions
+                var options = new NeatParserOptions
                 {
                     RecordSeperator = Environment.NewLine,
                     SkipFirst = 3
                 };
 
-                var parser = new SeperatedRecordParser(reader, LayoutFactory.GetBacsDetailLayout(), options);
+                var parser = new NeatParser(reader, LayoutFactory.GetBacsDetailLayout(), options);
                 Assert.IsTrue(parser.Next());
 
                 var values = parser.Take();
@@ -245,7 +245,7 @@ namespace NeatParser.UnitTests
             {
                 var toSkipPrefix = new List<string> {"VOL", "HDR", "UHL"};
 
-                var parser = new SeperatedRecordParser(reader, LayoutFactory.GetBacsDetailLayout());
+                var parser = new NeatParser(reader, LayoutFactory.GetBacsDetailLayout());
                 parser.OnRecordRead += (s, e) => { e.ShouldSkip = toSkipPrefix.Any(l => e.LineData.StartsWith(l)); };
 
                 Assert.IsTrue(parser.Next());
@@ -268,7 +268,7 @@ namespace NeatParser.UnitTests
             {
                 var toSkipPrefix = new List<string> {"VOL", "HDR", "UHL", "UTL"};
 
-                var parser = new SeperatedRecordParser(reader, LayoutFactory.GetBacsDetailLayout());
+                var parser = new NeatParser(reader, LayoutFactory.GetBacsDetailLayout());
                 parser.OnRecordRead += (s, e) => { e.ShouldSkip = toSkipPrefix.Any(l => e.LineData.StartsWith(l)); };
                 parser.OnRecordParseError += (s, e) =>
                 {
@@ -307,7 +307,7 @@ namespace NeatParser.UnitTests
         {
             using(var reader = new StringReader(VariableTestData))
             {
-                var parser = new SeperatedRecordParser(reader, LayoutFactory.GetVariableLayout());
+                var parser = new NeatParser(reader, LayoutFactory.GetVariableLayout());
                 parser.OnRecordParseError += (s, e) =>
                 {
                     throw new InvalidDataException("Error parsing " + e.LineData, e.Cause);
@@ -334,7 +334,7 @@ namespace NeatParser.UnitTests
         {
             using(var reader = new StringReader(InvalidTestData))
             {
-                var parser = new SeperatedRecordParser(reader, LayoutFactory.GetBacsDetailLayout());
+                var parser = new NeatParser(reader, LayoutFactory.GetBacsDetailLayout());
 
                 bool hasFired = false;
                 parser.OnRecordParseError += (s, e) =>
@@ -356,7 +356,7 @@ namespace NeatParser.UnitTests
         {
             using(var reader = new StringReader(InvalidTestData))
             {
-                var parser = new SeperatedRecordParser(reader, LayoutFactory.GetBacsDetailLayout());
+                var parser = new NeatParser(reader, LayoutFactory.GetBacsDetailLayout());
 
                 bool hasFired = false;
                 parser.OnRecordParseError += (s, e) =>
@@ -379,7 +379,7 @@ namespace NeatParser.UnitTests
             {
                 var toSkipPrefix = new List<string> {"VOL", "HDR", "UHL", "UTL"};
 
-                var parser = new SeperatedRecordParser(reader, LayoutFactory.GetBacsDetailLayout());
+                var parser = new NeatParser(reader, LayoutFactory.GetBacsDetailLayout());
                 parser.OnRecordRead += (s, e) => { e.ShouldSkip = toSkipPrefix.Any(l => e.LineData.StartsWith(l)); };
                 parser.OnRecordParseError += (s, e) =>
                 {

@@ -68,8 +68,8 @@
     <Compile Include="RecordParseErrorEventArgs.cs" />
     <Compile Include="RecordValueContainer.cs" />
     <Compile Include="RecordValueParser.cs" />
-    <Compile Include="SeperatedRecordParser.cs" />
-    <Compile Include="SeperatedRecordParserOptions.cs" />
+    <Compile Include="NeatParser.cs" />
+    <Compile Include="NeatParserOptions.cs" />
     <Compile Include="LayoutDecider.cs" />
     <Compile Include="Layout.cs" />
     <Compile Include="IColumnDefinition.cs" />
