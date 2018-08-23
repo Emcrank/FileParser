@@ -7,8 +7,6 @@ namespace NeatParser
     {
         public override bool IsDummy => false;
 
-        public override bool IsLayoutEditor => false;
-
         private readonly string format;
 
         /// <summary>

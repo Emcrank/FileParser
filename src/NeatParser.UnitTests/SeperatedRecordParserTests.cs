@@ -13,17 +13,23 @@ namespace NeatParser.UnitTests
         private static string InvalidTestData => "Invalid\r\nInvalid";
 
         private static string BacsTestData => new StringBuilder()
-            .AppendLine(@"VOL1623187                           ****999999                                3                                                ")
-            .AppendLine(@"HDR1 A999999S   999999                 F     01 18164              18173                                                        ")
-            .AppendLine(@"UHL1 18164623187    00000000         000              CLIENTNAME                                                                ")
-            .AppendLine(@"6231878014026209960708010025847000000000016216JP157084A DWP SMI 999999-9999999    12345678           27358901509F6F             ")
-            .AppendLine(@"6231878014026209960708010025847000000000032428JM071783D DWP SMI 888888-88888-08                      27358901509F70             ")
-            .Append(@"UTL28932398748732835                                                                                                            ")
+            .AppendLine(
+                @"VOL1623187                           ****999999                                3                                                ")
+            .AppendLine(
+                @"HDR1 A999999S   999999                 F     01 18164              18173                                                        ")
+            .AppendLine(
+                @"UHL1 18164623187    00000000         000              CLIENTNAME                                                                ")
+            .AppendLine(
+                @"6231878014026209960708010025847000000000016216JP157084A DWP SMI 999999-9999999    12345678           27358901509F6F             ")
+            .AppendLine(
+                @"6231878014026209960708010025847000000000032428JM071783D DWP SMI 888888-88888-08                      27358901509F70             ")
+            .Append(
+                @"UTL28932398748732835                                                                                                            ")
             .ToString();
 
         private static string VariableTestData => new StringBuilder()
-                .AppendLine(@"FILE#0047001A025FAKE DATA - 1234567898451012MOREFAKEDATA")
-                .Append(@"FILE#0010001B021FAKE DATA - 123456789006MOREFA")
+            .AppendLine(@"FILE#0047001A025FAKE DATA - 1234567898451012MOREFAKEDATA")
+            .Append(@"FILE#0010001B021FAKE DATA - 123456789006MOREFA")
             .ToString();
 
         private static string LayoutEditorTestData =>
@@ -32,27 +38,27 @@ namespace NeatParser.UnitTests
         [TestMethod]
         public void CanParseRecordsWithLayoutEditorColumn()
         {
-            using (var reader = new StringReader(LayoutEditorTestData))
+            using(var reader = new StringReader(LayoutEditorTestData))
             {
-                var options = new SeperatedRecordParserOptions() { RecordSeperator = "|" };
+                var options = new SeperatedRecordParserOptions {RecordSeperator = "|"};
                 var parser = new SeperatedRecordParser(reader, LayoutFactory.CreateLayoutEditorLayout(), options);
 
                 Assert.IsTrue(parser.Next());
                 var values = parser.Take();
-                Assert.AreEqual(5400, values[0]);
-                Assert.AreEqual(new DateTime(2018, 8, 6), values[1]);
-                Assert.AreEqual("00000199", values[2]);
+                Assert.AreEqual(5400, values[LayoutFactory.AmountColumnName]);
+                Assert.AreEqual(new DateTime(2018, 8, 6), values[LayoutFactory.PaymentDateColumnName]);
+                Assert.AreEqual("00000199", values[LayoutFactory.AccountNumberColumnName]);
                 Assert.AreEqual("134001", values[LayoutFactory.SortCodeColumnName]);
-                Assert.AreEqual("S YZXTH", values[4]);
+                Assert.AreEqual("S YZXTH", values[LayoutFactory.Narrative1ColumnName]);
                 Assert.AreEqual("XXXXYYYY & XILJLPK", values[LayoutFactory.Narrative2ColumnName]);
 
                 Assert.IsTrue(parser.Next());
                 values = parser.Take();
-                Assert.AreEqual(12500, values[0]);
-                Assert.AreEqual(new DateTime(2018, 8, 6), values[1]);
-                Assert.AreEqual("00027303", values[2]);
+                Assert.AreEqual(12500, values[LayoutFactory.AmountColumnName]);
+                Assert.AreEqual(new DateTime(2018, 8, 6), values[LayoutFactory.PaymentDateColumnName]);
+                Assert.AreEqual("00027303", values[LayoutFactory.AccountNumberColumnName]);
                 Assert.AreEqual("134001", values[LayoutFactory.SortCodeColumnName]);
-                Assert.AreEqual("E POIU", values[4]);
+                Assert.AreEqual("E POIU", values[LayoutFactory.Narrative1ColumnName]);
                 Assert.AreEqual("XYXYXYXY ZZZXXXX", values[LayoutFactory.Narrative2ColumnName]);
             }
         }
@@ -71,7 +77,7 @@ namespace NeatParser.UnitTests
                 var parser = new SeperatedRecordParser(reader, LayoutFactory.GetBacsDetailLayout(), options);
                 Assert.IsTrue(parser.Next());
 
-                string sortCode = parser.Take()[0];
+                string sortCode = parser.Take()["SortCode"];
                 Assert.AreEqual("623187", sortCode);
             }
         }
@@ -94,7 +100,7 @@ namespace NeatParser.UnitTests
 
                 Assert.AreEqual("623187", values["SortCode"]);
                 Assert.AreEqual("80140262", values["AccountNumber"]);
-                Assert.AreEqual("99", values[2]);
+                Assert.AreEqual("99", values["TransactionCode"]);
                 Assert.AreEqual(16216, values["Amount"]);
                 Assert.AreEqual("JP157084A DWP SMI", values["RemittersName"]);
                 Assert.AreEqual("999999-9999999", values["RemittersReferenceNumber"]);
@@ -117,7 +123,7 @@ namespace NeatParser.UnitTests
 
                 Assert.AreEqual("623187", values["SortCode"]);
                 Assert.AreEqual("80140262", values["AccountNumber"]);
-                Assert.AreEqual("99", values[2]);
+                Assert.AreEqual("99", values["TransactionCode"]);
                 Assert.AreEqual(32428, values["Amount"]);
                 Assert.AreEqual("JM071783D DWP SMI", values["RemittersName"]);
                 Assert.AreEqual("888888-88888-08", values["RemittersReferenceNumber"]);
@@ -127,13 +133,16 @@ namespace NeatParser.UnitTests
         [TestMethod]
         public void Parser_CanReadUntilTheEnd()
         {
-            using (var reader = new StringReader(BacsTestData))
+            using(var reader = new StringReader(BacsTestData))
             {
-                var toSkipPrefix = new List<string> { "VOL", "HDR", "UHL", "UTL" };
+                var toSkipPrefix = new List<string> {"VOL", "HDR", "UHL", "UTL"};
 
                 var parser = new SeperatedRecordParser(reader, LayoutFactory.GetBacsDetailLayout());
                 parser.OnRecordRead += (s, e) => { e.ShouldSkip = toSkipPrefix.Any(l => e.LineData.StartsWith(l)); };
-                parser.OnRecordParseError += (s,e) => { throw new InvalidDataException("Failed to parse " + e.LineData, e.Cause); };
+                parser.OnRecordParseError += (s, e) =>
+                {
+                    throw new InvalidDataException("Failed to parse " + e.LineData, e.Cause);
+                };
 
                 var rowData = new List<RecordValueContainer>();
                 Assert.IsTrue(parser.Next());
@@ -145,7 +154,7 @@ namespace NeatParser.UnitTests
                 var values = rowData[0];
                 Assert.AreEqual("623187", values["SortCode"]);
                 Assert.AreEqual("80140262", values["AccountNumber"]);
-                Assert.AreEqual("99", values[2]);
+                Assert.AreEqual("99", values["TransactionCode"]);
                 Assert.AreEqual(16216, values["Amount"]);
                 Assert.AreEqual("JP157084A DWP SMI", values["RemittersName"]);
                 Assert.AreEqual("999999-9999999", values["RemittersReferenceNumber"]);
@@ -153,7 +162,7 @@ namespace NeatParser.UnitTests
                 values = rowData[1];
                 Assert.AreEqual("623187", values["SortCode"]);
                 Assert.AreEqual("80140262", values["AccountNumber"]);
-                Assert.AreEqual("99", values[2]);
+                Assert.AreEqual("99", values["TransactionCode"]);
                 Assert.AreEqual(32428, values["Amount"]);
                 Assert.AreEqual("JM071783D DWP SMI", values["RemittersName"]);
                 Assert.AreEqual("888888-88888-08", values["RemittersReferenceNumber"]);
@@ -168,28 +177,31 @@ namespace NeatParser.UnitTests
             using(var reader = new StringReader(VariableTestData))
             {
                 var parser = new SeperatedRecordParser(reader, LayoutFactory.GetVariableLayout());
-                parser.OnRecordParseError += (s, e) => { throw new InvalidDataException("Error parsing " + e.LineData, e.Cause); };
+                parser.OnRecordParseError += (s, e) =>
+                {
+                    throw new InvalidDataException("Error parsing " + e.LineData, e.Cause);
+                };
 
                 Assert.IsTrue(parser.Next());
                 var values = parser.Take();
-                Assert.AreEqual("FILE#0047", values[0]);
-                Assert.AreEqual("A", values[1]);
-                Assert.AreEqual("FAKE DATA - 1234567898451", values[2]);
-                Assert.AreEqual("MOREFAKEDATA", values[3]);
+                Assert.AreEqual("FILE#0047", values["FileIdentifier"]);
+                Assert.AreEqual("A", values["FirstData"]);
+                Assert.AreEqual("FAKE DATA - 1234567898451", values["SecondData"]);
+                Assert.AreEqual("MOREFAKEDATA", values["ThirdData"]);
 
                 Assert.IsTrue(parser.Next());
                 values = parser.Take();
-                Assert.AreEqual("FILE#0010", values[0]);
-                Assert.AreEqual("B", values[1]);
-                Assert.AreEqual("FAKE DATA - 123456789", values[2]);
-                Assert.AreEqual("MOREFA", values[3]);
+                Assert.AreEqual("FILE#0010", values["FileIdentifier"]);
+                Assert.AreEqual("B", values["FirstData"]);
+                Assert.AreEqual("FAKE DATA - 123456789", values["SecondData"]);
+                Assert.AreEqual("MOREFA", values["ThirdData"]);
             }
         }
 
         [TestMethod]
         public void Parser_FiresEventWhenRecordErrorExists()
         {
-            using (var reader = new StringReader(InvalidTestData))
+            using(var reader = new StringReader(InvalidTestData))
             {
                 var parser = new SeperatedRecordParser(reader, LayoutFactory.GetBacsDetailLayout());
 
@@ -211,7 +223,7 @@ namespace NeatParser.UnitTests
         [TestMethod]
         public void Parser_RethrowsExceptionIfNotUserHandled()
         {
-            using (var reader = new StringReader(InvalidTestData))
+            using(var reader = new StringReader(InvalidTestData))
             {
                 var parser = new SeperatedRecordParser(reader, LayoutFactory.GetBacsDetailLayout());
 
@@ -232,29 +244,29 @@ namespace NeatParser.UnitTests
         [TestMethod]
         public void Parser_CompletesFullRead()
         {
-            using (var reader = new StringReader(BacsTestData))
+            using(var reader = new StringReader(BacsTestData))
             {
-                var toSkipPrefix = new List<string> { "VOL", "HDR", "UHL", "UTL" };
+                var toSkipPrefix = new List<string> {"VOL", "HDR", "UHL", "UTL"};
 
                 var parser = new SeperatedRecordParser(reader, LayoutFactory.GetBacsDetailLayout());
                 parser.OnRecordRead += (s, e) => { e.ShouldSkip = toSkipPrefix.Any(l => e.LineData.StartsWith(l)); };
-                parser.OnRecordParseError += (s, e) => { throw new InvalidDataException("Error parsing " + e.LineData, e.Cause); };
+                parser.OnRecordParseError += (s, e) =>
+                {
+                    throw new InvalidDataException("Error parsing " + e.LineData, e.Cause);
+                };
 
                 var rowData = new List<RecordValueContainer>();
 
-                while(parser.Next())
-                {
-                    rowData.Add(parser.Take());
-                }
+                while(parser.Next()) rowData.Add(parser.Take());
 
                 Assert.AreEqual(2, rowData.Count);
                 Assert.AreEqual(6, rowData[0].RecordValues.Count);
                 Assert.AreEqual(6, rowData[1].RecordValues.Count);
-                
+
                 foreach(var value in rowData[0].RecordValues)
                     Assert.IsNotNull(value, "rowData[0] value != null");
 
-                foreach (var value in rowData[1].RecordValues)
+                foreach(var value in rowData[1].RecordValues)
                     Assert.IsNotNull(value, "rowData[1] value != null");
             }
         }

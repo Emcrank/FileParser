@@ -27,6 +27,11 @@ namespace NeatParser
         public bool IsLayoutEditor => false;
 
         /// <summary>
+        /// Gets the IsRequired value.
+        /// </summary>
+        public bool IsRequired => false;
+
+        /// <summary>
         /// Gets the layout editor.
         /// </summary>
         public ILayoutEditor LayoutEditor => null;

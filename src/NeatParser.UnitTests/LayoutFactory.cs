@@ -33,7 +33,7 @@
         internal const string Narrative1ColumnName = "OriginatingCustomerAccountName";
         internal const string Narrative2ColumnName = "BeneficiaryCustomerAccountName";
         internal const string AmountColumnName = "Amount";
-        internal const string PaymentDayColumnName = "SettlementDate";
+        internal const string PaymentDateColumnName = "SettlementDate";
         internal const string AccountNumberColumnName = "BeneficiaryCustomerAccountNumber";
         internal const string ColumnAssignedNumber = "ColumnNumber";
 
@@ -62,7 +62,7 @@
                 new DummyColumn("DateSent").AddMetadata(ColumnAssignedNumber, 12),
                 new FixedLengthSpace(8));
             layout.AddColumn(
-                new DateTimeColumn(PaymentDayColumnName, "yyyyMMdd").AddMetadata(ColumnAssignedNumber, 15),
+                new DateTimeColumn(PaymentDateColumnName, "yyyyMMdd").AddMetadata(ColumnAssignedNumber, 15),
                 new FixedLengthSpace(8));
             layout.AddColumn(
                 new DummyColumn("ActionCode").AddMetadata(ColumnAssignedNumber, 26),

@@ -1,13 +1,11 @@
 ﻿namespace NeatParser
 {
     /// <summary>
-    /// Class for general string columns. Default column. Created for optimization.
+    ///     Class for general string columns. Default column. Created for optimization.
     /// </summary>
     public class StringColumn : ColumnDefinition<string>
     {
         public override bool IsDummy => false;
-
-        public override bool IsLayoutEditor => false;
 
         /// <summary>
         ///     Constructs a new instance of the <see cref="StringColumn" /> class.

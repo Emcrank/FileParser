@@ -34,6 +34,11 @@ namespace NeatParser
         IDictionary Metadata { get; }
 
         /// <summary>
+        /// Gets a value that determines if the column is a required field.
+        /// </summary>
+        bool IsRequired { get; }
+
+        /// <summary>
         /// Parses text and converts if necessary.
         /// </summary>
         /// <param name="value">Text to be parsed.</param>
