@@ -12,8 +12,9 @@ namespace NeatParser
         /// <summary>
         /// Constructs a new instance of <see cref="CustomBooleanColumn"/> with a random column name.
         /// </summary>
-        /// <param name="trueValues"></param>
-        public CustomBooleanColumn(string trueValues) : this(Path.GetRandomFileName(), trueValues) { }
+        /// <param name="trueValues">String with comma delimited values which should be considered as a true result.</param>
+        /// <param name="isRequired">Is required</param>
+        public CustomBooleanColumn(string trueValues, bool isRequired = false) : this(Path.GetRandomFileName(), trueValues, isRequired) { }
 
         /// <summary>
         /// Constructs a new instance of <see cref="CustomBooleanColumn"/> with specified column name.
@@ -22,7 +23,8 @@ namespace NeatParser
         /// <param name="trueValues">
         /// String with comma delimited values which should be considered as a true result.
         /// </param>
-        public CustomBooleanColumn(string columnName, string trueValues) : base(columnName)
+        /// <param name="isRequired">Is required</param>
+        public CustomBooleanColumn(string columnName, string trueValues, bool isRequired = false) : base(columnName, isRequired)
         {
             if (trueValues == null)
                 throw new ArgumentNullException(nameof(columnName));

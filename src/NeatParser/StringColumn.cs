@@ -1,4 +1,6 @@
-﻿namespace NeatParser
+﻿using System.IO;
+
+namespace NeatParser
 {
     /// <summary>
     ///     Class for general string columns. Default column. Created for optimization.
@@ -10,13 +12,14 @@
         /// <summary>
         ///     Constructs a new instance of the <see cref="StringColumn" /> class.
         /// </summary>
-        public StringColumn() { }
+        public StringColumn(bool isRequired = false) : base(Path.GetRandomFileName(), isRequired) { }
 
         /// <summary>
         ///     Constructs a new instance of the <see cref="StringColumn" /> class with specified column name.
         /// </summary>
         /// <param name="columnName">Name of the colum.</param>
-        public StringColumn(string columnName) : base(columnName) { }
+        /// <param name="isRequired">Is required</param>
+        public StringColumn(string columnName, bool isRequired = false) : base(columnName, isRequired) { }
 
         protected override string OnParse(string value)
         {
