@@ -88,7 +88,7 @@ namespace NeatParser
             : this(reader, layoutDecider, new SeperatedRecordParserOptions()) { }
 
         /// <summary>
-        /// Advances the reader to the next record.
+        /// Advances the reader to the next record. Returns true if a record is found. False if no more records exist.
         /// </summary>
         /// <returns>
         /// True if record has been read. False if has reached end of reader or an incomplete record.

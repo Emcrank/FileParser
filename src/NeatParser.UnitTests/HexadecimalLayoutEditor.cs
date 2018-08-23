@@ -92,7 +92,7 @@ namespace NeatParser.UnitTests
             int difference = endNumber - startNumber + 1;
             if (binaryString.Length != difference)
                 throw new InvalidDataException(Invariant(
-                    $"The binary string value retrieved is not long enough for the endIndex provided. endIndex: {endNumber}, binaryString: '{binaryString}'"));
+                    $"The binary string value retrieved is not long enough for the endNumber provided. endNumber: {endNumber}, binaryString: '{binaryString}'"));
         }
     }
 }
