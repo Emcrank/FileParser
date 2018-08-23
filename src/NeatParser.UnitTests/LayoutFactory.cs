@@ -155,7 +155,7 @@
         {
             var layout = new Layout();
             layout.AddColumn(new LayoutEditorColumn(new HexadecimalLayoutEditor(1,4)), new FixedLengthSpace(1));
-            layout.AddColumn(new ColumnDefinition<int>("1").AddMetadata(ColumnAssignedNumber, 1), new FixedLengthSpace(2));
+            layout.AddColumn(new ColumnDefinition<int>("1", true).AddMetadata(ColumnAssignedNumber, 1), new FixedLengthSpace(2));
             layout.AddColumn(new StringColumn("2").AddMetadata(ColumnAssignedNumber, 2), new FixedLengthSpace(2));
             layout.AddColumn(new ColumnDefinition<int>("3").AddMetadata(ColumnAssignedNumber, 3), new FixedLengthSpace(2));
             layout.AddColumn(new StringColumn("4").AddMetadata(ColumnAssignedNumber, 4), new FixedLengthSpace(2));

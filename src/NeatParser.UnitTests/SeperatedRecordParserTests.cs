@@ -37,6 +37,21 @@ namespace NeatParser.UnitTests
 
         private static string LayoutEditorIntegerTestData => @"7TT00BA";
 
+        [ExpectedException(typeof(NeatParserException))]
+        [TestMethod]
+        public void IsRequiredThrowsExceptionWhenNotFound()
+        {
+            using (var reader = new StringReader(LayoutEditorIntegerTestData))
+            {
+                var parser = new SeperatedRecordParser(reader, LayoutFactory.CreateEditLayoutZeroData());
+
+                Assert.IsTrue(parser.Next());
+                var values = parser.Take();
+
+                Assert.AreEqual(null, values["1"]);
+            }
+        }
+
         [TestMethod]
         public void IntegerParsesCorrectly()
         {
@@ -47,7 +62,6 @@ namespace NeatParser.UnitTests
                 Assert.IsTrue(parser.Next());
                 var values = parser.Take();
 
-                Assert.AreEqual(null, values["1"]);
                 Assert.AreEqual("TT", values["2"]);
                 Assert.AreEqual(0, values["3"]);
                 Assert.AreEqual("BA", values["4"]);
