@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("NeatParser.UnitTests")]
-[assembly: AssemblyCopyright("Copyright © Computershare 2018")]
+[assembly: AssemblyCopyright("Copyright © Aaron Todd 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

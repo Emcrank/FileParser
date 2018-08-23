@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace NeatParser
 {
     public class Layout
     {
+        /// <summary>
+        /// Gets the layout name.
+        /// </summary>
+        public string Name { get; }
+
         /// <summary>
         ///  Used as a holding list for all the columns assigned at compile time.
         /// </summary>
@@ -45,6 +51,20 @@ namespace NeatParser
         /// <returns>Column with specified name</returns>
         internal Column this[string columnName] =>
             currentColumns.FirstOrDefault(c => c.Definition.ColumnName.Equals(columnName, StringComparison.Ordinal));
+
+        /// <summary>
+        /// Initializes a <see cref="Layout"/> instance.
+        /// </summary>
+        public Layout() : this(string.Concat("Layout_", Path.GetRandomFileName())) { }
+
+        /// <summary>
+        /// Initializes a <see cref="Layout"/> instance with specified layout name.
+        /// </summary>
+        /// <param name="layoutName">The name for the layout.</param>
+        public Layout(string layoutName)
+        {
+            Name = layoutName;
+        }
 
         /// <summary>
         /// Adds a column to the layout with the specified column definition and space.

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following set of attributes.
 // Change these attribute values to modify the information associated with an assembly.
 [assembly: AssemblyTitle("NeatParser")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A simple and easy to use library for parsing files.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("NeatParser")]
-[assembly: AssemblyCopyright("Copyright © Computershare 2018")]
+[assembly: AssemblyCopyright("Copyright © Aaron Todd 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -28,8 +28,8 @@ using System.Runtime.InteropServices;
 // as shown below: [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: InternalsVisibleTo("FileParser.UnitTests")]
-[assembly: InternalsVisibleTo("FileParser.PexTests")]
-[assembly: InternalsVisibleTo("FileParser.Explorables")]
-[assembly: InternalsVisibleTo("FileParser.Tests")]
+[assembly: InternalsVisibleTo("NeatParser.UnitTests")]
+[assembly: InternalsVisibleTo("NeatParser.PexTests")]
+[assembly: InternalsVisibleTo("NeatParser.Explorables")]
+[assembly: InternalsVisibleTo("NeatParser.Tests")]
 
