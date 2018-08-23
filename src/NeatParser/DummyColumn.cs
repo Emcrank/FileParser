@@ -39,7 +39,7 @@ namespace NeatParser
         /// <summary>
         /// Gets the metadata dictionary.
         /// </summary>
-        public IDictionary Metadata { get; } = new Dictionary<object, object>();
+        public IDictionary<string, object> Metadata { get; } = new Dictionary<string, object>();
 
         /// <summary>
         /// Gets the TrimValue value.
@@ -75,7 +75,7 @@ namespace NeatParser
         /// <returns>This column definition.</returns>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="NotSupportedException"></exception>
-        public IColumnDefinition AddMetadata(object key, object value)
+        public IColumnDefinition AddMetadata(string key, object value)
         {
             Metadata.Add(key, value);
             return this;

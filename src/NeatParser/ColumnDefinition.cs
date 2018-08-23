@@ -61,7 +61,7 @@ namespace NeatParser
         /// <summary>
         ///     Gets the column metadata dictionary.
         /// </summary>
-        public IDictionary Metadata { get; } = new Dictionary<object, object>();
+        public IDictionary<string, object> Metadata { get; } = new Dictionary<string, object>();
 
         /// <summary>
         ///     Gets or sets a value that determines if the column is required to contain a value.
@@ -92,7 +92,7 @@ namespace NeatParser
         /// <returns>This column definition.</returns>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="NotSupportedException"></exception>
-        public IColumnDefinition AddMetadata(object key, object value)
+        public IColumnDefinition AddMetadata(string key, object value)
         {
             Metadata.Add(key, value);
             return this;

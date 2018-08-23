@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace NeatParser
 {
@@ -31,7 +32,7 @@ namespace NeatParser
         /// <summary>
         /// Gets the column metadata dictionary.
         /// </summary>
-        IDictionary Metadata { get; }
+        IDictionary<string, object> Metadata { get; }
 
         /// <summary>
         /// Gets a value that determines if the column is a required field.
@@ -53,6 +54,6 @@ namespace NeatParser
         /// <returns>This column definition.</returns>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="NotSupportedException"></exception>
-        IColumnDefinition AddMetadata(object key, object value);
+        IColumnDefinition AddMetadata(string key, object value);
     }
 }

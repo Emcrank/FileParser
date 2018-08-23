@@ -65,7 +65,7 @@ namespace NeatParser.UnitTests
 
         private static Column GetColumn(IEnumerable<Column> columns, int number)
         {
-            return columns.FirstOrDefault(c =>
+            return columns.FirstOrDefault(c => c.Definition.Metadata.ContainsKey(LayoutFactory.ColumnAssignedNumber) && 
                 c.Definition.Metadata[LayoutFactory.ColumnAssignedNumber].Equals(number));
         }
 
