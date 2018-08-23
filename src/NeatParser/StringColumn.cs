@@ -17,7 +17,7 @@ namespace NeatParser
         /// <summary>
         ///     Constructs a new instance of the <see cref="StringColumn" /> class with specified column name.
         /// </summary>
-        /// <param name="columnName">Name of the colum.</param>
+        /// <param name="columnName">Name of the column.</param>
         /// <param name="isRequired">Is required</param>
         public StringColumn(string columnName, bool isRequired = false) : base(columnName, isRequired) { }
 

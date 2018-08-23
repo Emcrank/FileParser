@@ -7,18 +7,18 @@ using static System.FormattableString;
 namespace NeatParser
 {
     /// <summary>
-    /// Parser class that should be used to parse files that have records with a seperator. Default
-    /// seperator is Environment.NewLine.
+    ///     Parser class that should be used to parse files that have records with a seperator. Default
+    ///     seperator is Environment.NewLine.
     /// </summary>
-    public class SeperatedRecordParser
+    public sealed class SeperatedRecordParser
     {
         /// <summary>
-        /// Gets the IParsingContext which provides contextual information regarding the parsers execution.
+        ///     Gets the IParsingContext which provides contextual information regarding the parsers execution.
         /// </summary>
         public IParsingContext Context => context;
 
         /// <summary>
-        /// Gets the layout currently in use.
+        ///     Gets the layout currently in use.
         /// </summary>
         public Layout CurrentLayout => layoutDecider.Current;
 
@@ -29,13 +29,9 @@ namespace NeatParser
         private readonly TextReader reader;
         private IReadOnlyDictionary<string, object> recordValues;
 
-        public event EventHandler<RecordParseErrorEventArgs> OnRecordParseError;
-
-        public event EventHandler<RecordReadEventArgs> OnRecordRead;
-
         /// <summary>
-        /// Constructs a new instance of the <see cref="SeperatedRecordParser"/> using a
-        /// <see cref="LayoutDecider"/> instance.
+        ///     Constructs a new instance of the <see cref="SeperatedRecordParser" /> using a
+        ///     <see cref="LayoutDecider" /> instance.
         /// </summary>
         /// <param name="reader">Reader</param>
         /// <param name="layoutDecider">Layout decider</param>
@@ -43,25 +39,25 @@ namespace NeatParser
         public SeperatedRecordParser(TextReader reader, LayoutDecider layoutDecider,
             SeperatedRecordParserOptions options)
         {
-            if (reader == null)
+            if(reader == null)
                 throw new ArgumentNullException(nameof(reader));
 
-            if (layoutDecider == null)
+            if(layoutDecider == null)
                 throw new ArgumentNullException(nameof(layoutDecider));
 
-            if (options == null)
+            if(options == null)
                 throw new ArgumentNullException(nameof(options));
 
             this.reader = reader;
             this.layoutDecider = layoutDecider;
             this.options = options;
 
-            for (int i = 1; i <= options.SkipFirst; i++) SkipRecord();
+            for(int i = 1; i <= options.SkipFirst; i++) SkipRecord();
         }
 
         /// <summary>
-        /// Constructs a new instance of the <see cref="SeperatedRecordParser"/> using a
-        /// <see cref="Layout"/> instance.
+        ///     Constructs a new instance of the <see cref="SeperatedRecordParser" /> using a
+        ///     <see cref="Layout" /> instance.
         /// </summary>
         /// <param name="reader">Reader</param>
         /// <param name="layout">layout to use</param>
@@ -70,8 +66,8 @@ namespace NeatParser
             : this(reader, new LayoutDecider(layout), options) { }
 
         /// <summary>
-        /// Constructs a new instance of the <see cref="SeperatedRecordParser"/> using a
-        /// <see cref="Layout"/> instance using the default options.
+        ///     Constructs a new instance of the <see cref="SeperatedRecordParser" /> using a
+        ///     <see cref="Layout" /> instance using the default options.
         /// </summary>
         /// <param name="reader">Reader</param>
         /// <param name="layout">layout to use</param>
@@ -79,19 +75,23 @@ namespace NeatParser
             : this(reader, new LayoutDecider(layout), new SeperatedRecordParserOptions()) { }
 
         /// <summary>
-        /// Constructs a new instance of the <see cref="SeperatedRecordParser"/> using a
-        /// <see cref="LayoutDecider"/> instance using the default options.
+        ///     Constructs a new instance of the <see cref="SeperatedRecordParser" /> using a
+        ///     <see cref="LayoutDecider" /> instance using the default options.
         /// </summary>
         /// <param name="reader">Reader</param>
         /// <param name="layoutDecider">layout decider</param>
         public SeperatedRecordParser(TextReader reader, LayoutDecider layoutDecider)
             : this(reader, layoutDecider, new SeperatedRecordParserOptions()) { }
 
+        public event EventHandler<RecordParseErrorEventArgs> OnRecordParseError;
+
+        public event EventHandler<RecordReadEventArgs> OnRecordRead;
+
         /// <summary>
-        /// Advances the reader to the next record. Returns true if a record is found. False if no more records exist.
+        ///     Advances the reader to the next record. Returns true if a record is found. False if no more records exist.
         /// </summary>
         /// <returns>
-        /// True if record has been read. False if has reached the end of reader or an incomplete record.
+        ///     True if record has been read. False if has reached the end of reader or an incomplete record.
         /// </returns>
         public bool Next()
         {
@@ -99,16 +99,26 @@ namespace NeatParser
             {
                 return NextInternal();
             }
-            catch (Exception ex) when (ex is IOException)
+            catch(Exception ex) when(ex is IOException)
             {
                 throw new NeatParserException(ex);
             }
         }
 
         /// <summary>
-        /// Takes the values for the current record being processed.
+        ///     Advances the reader to the next record and returns the record values.
+        ///     Returns null if has reached the end of reader or an incomplete record.
         /// </summary>
-        /// <returns>A <see cref="RecordValueContainer"/> instance in which the values will exist.</returns>
+        /// <returns>A <see cref="RecordValueContainer" /> instance in which the values will exist.</returns>
+        public RecordValueContainer TakeNext()
+        {
+            return Next() ? Take() : null;
+        }
+
+        /// <summary>
+        ///     Takes the values for the current record being processed.
+        /// </summary>
+        /// <returns>A <see cref="RecordValueContainer" /> instance in which the values will exist.</returns>
         public RecordValueContainer Take()
         {
             return new RecordValueContainer(layoutDecider.Current, recordValues ?? new Dictionary<string, object>());
@@ -124,7 +134,8 @@ namespace NeatParser
             }
             catch(NeatParserException ex)
             {
-                throw new NeatParserException(Invariant($"An error occured parsing record number {context.ActualRecordNumber}."), ex);
+                throw new NeatParserException(
+                    Invariant($"An error occured parsing record number {context.ActualRecordNumber}."), ex);
             }
         }
 
@@ -151,12 +162,10 @@ namespace NeatParser
         {
             var recordDataBuffer = ReadUntilNextSeperator();
 
-            if(recordDataBuffer.Length == 0)
+            if(MeetsExitCriteria(recordDataBuffer))
                 return false;
-            if(string.IsNullOrWhiteSpace(recordDataBuffer.ToString()))
-                return false;
-            
-            if (InvokeOnRecordReadHandler(recordDataBuffer).ShouldSkip)
+
+            if(InvokeOnRecordReadHandler(recordDataBuffer).ShouldSkip)
                 return ReadNextRecord();
 
             layoutDecider.Decide(recordDataBuffer);
@@ -165,7 +174,7 @@ namespace NeatParser
             {
                 GetRecordValues(recordDataBuffer);
             }
-            catch (NeatParserException ex)
+            catch(NeatParserException ex)
             {
                 var eventArgs = InvokeOnRecordParseError(recordDataBuffer, ex);
                 if(!eventArgs.UserHandled)
@@ -175,6 +184,11 @@ namespace NeatParser
             return true;
         }
 
+        private static bool MeetsExitCriteria(StringBuilder recordDataBuffer)
+        {
+            return recordDataBuffer.Length == 0 || string.IsNullOrEmpty(recordDataBuffer.ToString());
+        }
+
         private StringBuilder ReadUntilNextSeperator()
         {
             context.PhysicalRecordNumber++;
@@ -182,11 +196,11 @@ namespace NeatParser
             int partialLength = options.RecordSeperator.Length - 1;
             var currentStringBuffer = new StringBuilder();
 
-            while (!IsEndOfReader)
+            while(!IsEndOfReader)
             {
                 char nextChar = (char)reader.Read();
 
-                if (seperatorBuffer.PushAndMatch(nextChar, options.RecordSeperator))
+                if(seperatorBuffer.PushAndMatch(nextChar, options.RecordSeperator))
                     return currentStringBuffer.Remove(currentStringBuffer.Length - partialLength, partialLength);
 
                 currentStringBuffer.Append(nextChar);

@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="HexadecimalLayoutEditor.cs" />
     <Compile Include="LayoutFactory.cs" />
+    <Compile Include="LayoutTests.cs" />
     <Compile Include="RecordValueContainerTests.cs" />
     <Compile Include="StringColumnTests.cs" />
     <Compile Include="ColumnDefinitionTests.cs" />

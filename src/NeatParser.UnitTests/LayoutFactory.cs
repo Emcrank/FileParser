@@ -2,6 +2,26 @@
 {
     public static class LayoutFactory
     {
+        internal const string SortCodeColumnName = "BeneficiaryCreditInstitution";
+        internal const string Narrative1ColumnName = "OriginatingCustomerAccountName";
+        internal const string Narrative2ColumnName = "BeneficiaryCustomerAccountName";
+        internal const string AmountColumnName = "Amount";
+        internal const string PaymentDateColumnName = "SettlementDate";
+        internal const string AccountNumberColumnName = "BeneficiaryCustomerAccountNumber";
+        internal const string ColumnAssignedNumber = "ColumnNumber";
+
+        public static Layout GetDelimitedLayout()
+        {
+            var layout = new Layout();
+            layout.SetDelimiter(",");
+            layout.AddColumn(new StringColumn("1"), new FixedLengthSpace(8));
+            layout.AddColumn(new StringColumn("2"), new FixedLengthSpace(8));
+            layout.AddColumn(new StringColumn("3"), new FixedLengthSpace(8));
+            layout.AddColumn(new StringColumn("4"), new FixedLengthSpace(8));
+            layout.AddColumn(new StringColumn("5"), new FixedLengthSpace(8));
+            return layout;
+        }
+
         public static Layout GetBacsDetailLayout()
         {
             var layout = new Layout();
@@ -28,14 +48,6 @@
             layout.AddColumn(new ColumnDefinition<string>("ThirdData"), new VariableLengthSpace(3));
             return layout;
         }
-
-        internal const string SortCodeColumnName = "BeneficiaryCreditInstitution";
-        internal const string Narrative1ColumnName = "OriginatingCustomerAccountName";
-        internal const string Narrative2ColumnName = "BeneficiaryCustomerAccountName";
-        internal const string AmountColumnName = "Amount";
-        internal const string PaymentDateColumnName = "SettlementDate";
-        internal const string AccountNumberColumnName = "BeneficiaryCustomerAccountNumber";
-        internal const string ColumnAssignedNumber = "ColumnNumber";
 
         public static Layout CreateLayoutEditorLayout()
         {
@@ -154,10 +166,12 @@
         public static Layout CreateEditLayoutZeroData()
         {
             var layout = new Layout();
-            layout.AddColumn(new LayoutEditorColumn(new HexadecimalLayoutEditor(1,4)), new FixedLengthSpace(1));
-            layout.AddColumn(new ColumnDefinition<int>("1", true).AddMetadata(ColumnAssignedNumber, 1), new FixedLengthSpace(2));
+            layout.AddColumn(new LayoutEditorColumn(new HexadecimalLayoutEditor(1, 4)), new FixedLengthSpace(1));
+            layout.AddColumn(new ColumnDefinition<int>("1", true).AddMetadata(ColumnAssignedNumber, 1),
+                new FixedLengthSpace(2));
             layout.AddColumn(new StringColumn("2").AddMetadata(ColumnAssignedNumber, 2), new FixedLengthSpace(2));
-            layout.AddColumn(new ColumnDefinition<int>("3").AddMetadata(ColumnAssignedNumber, 3), new FixedLengthSpace(2));
+            layout.AddColumn(new ColumnDefinition<int>("3").AddMetadata(ColumnAssignedNumber, 3),
+                new FixedLengthSpace(2));
             layout.AddColumn(new StringColumn("4").AddMetadata(ColumnAssignedNumber, 4), new FixedLengthSpace(2));
             return layout;
         }

@@ -12,6 +12,12 @@ namespace NeatParser.UnitTests
     {
         private static string InvalidTestData => "Invalid\r\nInvalid";
 
+        private static string DelimitedTestDataNoTrailingDelimiter =>
+            @"TESTDATA 1COLUMN1,1COLUMN2,1COLUMN3,1COLUMN4,1COLUMN5 2COLUMN1,2COLUMN2,2COLUMN3,2COLUMN4,2COLUMN5";
+
+        private static string DelimitedTestDataWithTrailingDelimiter =>
+            @"TESTDATA 1COLUMN1,1COLUMN2,1COLUMN3,1COLUMN4,1COLUMN5, 2COLUMN1,2COLUMN2,2COLUMN3,2COLUMN4,2COLUMN5,";
+
         private static string BacsTestData => new StringBuilder()
             .AppendLine(
                 @"VOL1623187                           ****999999                                3                                                ")
@@ -37,11 +43,103 @@ namespace NeatParser.UnitTests
 
         private static string LayoutEditorIntegerTestData => @"7TT00BA";
 
+        private static string DelimitedTestData => new StringBuilder()
+            .AppendLine(@"HEADER----------------ROW")
+            .AppendLine(@"  TEST DATA 47|  TEST DATA 24|  TEST DATA 12|")
+            .AppendLine(@"  TEST DATA 14|  TEST DATA 11|  TEST DATA 06|")
+            .ToString();
+
+        [TestMethod]
+        public void Parse_CanReadDelimitedData()
+        {
+            using(var reader = new StringReader(DelimitedTestData))
+            {
+                var options = new SeperatedRecordParserOptions {SkipFirst = 1};
+                var layout = new Layout("testLayout", "|");
+                layout.AddColumn(new StringColumn("1") {TrimOption = TrimOptions.None}, new FixedLengthSpace(14));
+                layout.AddColumn(new StringColumn("2") {TrimOption = TrimOptions.None}, new FixedLengthSpace(14));
+                layout.AddColumn(new StringColumn("3") {TrimOption = TrimOptions.None}, new FixedLengthSpace(14));
+
+                var parser = new SeperatedRecordParser(reader, layout, options);
+                var values = parser.TakeNext();
+
+                Assert.AreEqual("  TEST DATA 47", values["1"]);
+                Assert.AreEqual("  TEST DATA 24", values["2"]);
+                Assert.AreEqual("  TEST DATA 12", values["3"]);
+
+                values = parser.TakeNext();
+
+                Assert.AreEqual("  TEST DATA 14", values["1"]);
+                Assert.AreEqual("  TEST DATA 11", values["2"]);
+                Assert.AreEqual("  TEST DATA 06", values["3"]);
+
+                Assert.IsNull(parser.TakeNext());
+            }
+        }
+
+        [TestMethod]
+        public void Parse_CanReadDelimitedData_WithoutTrailingDelimiter()
+        {
+            using(var reader = new StringReader(DelimitedTestDataNoTrailingDelimiter))
+            {
+                var options = new SeperatedRecordParserOptions {RecordSeperator = " ", SkipFirst = 1};
+                var layout = LayoutFactory.GetDelimitedLayout();
+                layout.RecordsHaveTrailingDelimiter = false;
+
+                var parser = new SeperatedRecordParser(reader, layout, options);
+                var values = parser.TakeNext();
+
+                Assert.AreEqual("1COLUMN1", values["1"]);
+                Assert.AreEqual("1COLUMN2", values["2"]);
+                Assert.AreEqual("1COLUMN3", values["3"]);
+                Assert.AreEqual("1COLUMN4", values["4"]);
+                Assert.AreEqual("1COLUMN5", values["5"]);
+
+                values = parser.TakeNext();
+
+                Assert.AreEqual("2COLUMN1", values["1"]);
+                Assert.AreEqual("2COLUMN2", values["2"]);
+                Assert.AreEqual("2COLUMN3", values["3"]);
+                Assert.AreEqual("2COLUMN4", values["4"]);
+                Assert.AreEqual("2COLUMN5", values["5"]);
+
+                Assert.IsNull(parser.TakeNext());
+            }
+        }
+
+        [TestMethod]
+        public void Parse_CanReadDelimitedData_WithTrailingDelimiter()
+        {
+            using(var reader = new StringReader(DelimitedTestDataWithTrailingDelimiter))
+            {
+                var options = new SeperatedRecordParserOptions {RecordSeperator = " ", SkipFirst = 1};
+                var parser = new SeperatedRecordParser(reader, LayoutFactory.GetDelimitedLayout(), options);
+
+                var values = parser.TakeNext();
+
+                Assert.AreEqual("1COLUMN1", values["1"]);
+                Assert.AreEqual("1COLUMN2", values["2"]);
+                Assert.AreEqual("1COLUMN3", values["3"]);
+                Assert.AreEqual("1COLUMN4", values["4"]);
+                Assert.AreEqual("1COLUMN5", values["5"]);
+
+                values = parser.TakeNext();
+
+                Assert.AreEqual("2COLUMN1", values["1"]);
+                Assert.AreEqual("2COLUMN2", values["2"]);
+                Assert.AreEqual("2COLUMN3", values["3"]);
+                Assert.AreEqual("2COLUMN4", values["4"]);
+                Assert.AreEqual("2COLUMN5", values["5"]);
+
+                Assert.IsNull(parser.TakeNext());
+            }
+        }
+
         [ExpectedException(typeof(NeatParserException))]
         [TestMethod]
         public void IsRequiredThrowsExceptionWhenNotFound()
         {
-            using (var reader = new StringReader(LayoutEditorIntegerTestData))
+            using(var reader = new StringReader(LayoutEditorIntegerTestData))
             {
                 var parser = new SeperatedRecordParser(reader, LayoutFactory.CreateEditLayoutZeroData());
 
@@ -58,7 +156,7 @@ namespace NeatParser.UnitTests
             using(var reader = new StringReader(LayoutEditorIntegerTestData))
             {
                 var parser = new SeperatedRecordParser(reader, LayoutFactory.CreateEditLayoutZeroData());
-                
+
                 Assert.IsTrue(parser.Next());
                 var values = parser.Take();
 
