@@ -1,22 +1,27 @@
 # NeatParser
 A library for parsing files.
 
-
 <h1 style="text-align: center;"><strong>Quick Start Guide</strong></h1>
 <p>&nbsp;</p>
-<h2 style="padding-left: 60px;"><span style="text-decoration: underline;"><strong>Layouts</strong></span></h2>
-<p style="padding-left: 60px;">A layout is basically telling the library what a record in the file looks like.</p>
+<h2 style="padding-left: 60px;"><span style="text-decoration: underline;"><strong>Parsing a delimited file</strong></span></h2>
+<p style="padding-left: 60px;">1. Define layout.</p>
+<p style="padding-left: 60px;">2. Instantiate parser options. (Optional)</p>
+<p style="padding-left: 60px;">3. Instantiate parser and take the record values.</p>
+<p style="padding-left: 60px;">&nbsp;</p>
 <p style="padding-left: 60px;">For example:</p>
 <p style="padding-left: 60px;">&nbsp;</p>
 <p style="padding-left: 60px;"><strong>Given an example delimited file</strong></p>
-```
+
+```csharp
 	HEADER
 	1COLUMN1,1COLUMN2,1COLUMN3,1COLUMN4,1COLUMN5,
 	2COLUMN1,2COLUMN2,2COLUMN3,2COLUMN4,2COLUMN5,
 	3COLUMN1,3COLUMN2,3COLUMN3,3COLUMN4,3COLUMN5,
 ```
+
 <p style="padding-left: 60px;"><strong>To configure a layout that met the specification of this file, it would be:</strong></p>
-```
+
+```csharp
 internal static Layout CreateExampleLayout()
 {
 	var layout = new Layout("ExampleLayout");
@@ -29,8 +34,11 @@ internal static Layout CreateExampleLayout()
 	return layout;
 }
 ```
-<p style="padding-left: 60px;"><strong>To then read each record from that file you would construct a NeatParser instance and pass the layout like so:</strong></p>
-```
+
+<p style="padding-left: 60px;"><strong>To then read each record from that file...</strong></p>
+<p style="padding-left: 60px;"><strong>First create the options for the parser...</strong></p>
+
+```csharp
 var options = new NeatParserOptions()
 {
 	// Default record seperator is Environment.NewLine.
@@ -38,10 +46,15 @@ var options = new NeatParserOptions()
 	// SkipFirst = 1 is to let the parser know to the first record - being the header.
 	SkipFirst = 1
 };
+```
+<p style="padding-left: 60px;"><strong>Next create the NeatParser instance and pass the required parameters including the options and layout.</strong></p>
+
+```csharp
 using(var exampleFileReader = new StreamReader("exampleFile.csv"))
 {
 	var layout = CreateExampleLayout();
 	var parser = new NeatParser(exampleFileReader, layout, options);
+	
 	while(parser.Next())
 	{
 		// Retrieve the values for the record by calling parser.Take();
@@ -57,3 +70,4 @@ using(var exampleFileReader = new StreamReader("exampleFile.csv"))
 	}
 }
 ```
+
