@@ -1,9 +1,8 @@
 # NeatParser
 A library for parsing files.
-
-<h1 style="text-align: center;"><strong>Quick Start Guide</strong></h1>
 <p>&nbsp;</p>
-<h2 style="padding-left: 60px;"><span style="text-decoration: underline;"><strong>Parsing a delimited file</strong></span></h2>
+<p>&nbsp;</p>
+<h2 style="padding-left: 40px;"><span style="text-decoration: underline;"><strong>Parsing a delimited file</strong></span></h2>
 <p style="padding-left: 60px;">1. Define layout.</p>
 <p style="padding-left: 60px;">2. Instantiate parser options. (Optional)</p>
 <p style="padding-left: 60px;">3. Instantiate parser and take the record values.</p>
@@ -35,7 +34,7 @@ internal static Layout CreateExampleLayout()
 }
 ```
 
-<p style="padding-left: 60px;"><strong>To then read each record from that file...</strong></p>
+<p style="padding-left: 60px;"><strong>To then read each record from that file:</strong></p>
 <p style="padding-left: 60px;"><strong>First create the options for the parser...</strong></p>
 
 ```csharp
