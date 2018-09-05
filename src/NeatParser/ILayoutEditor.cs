@@ -4,6 +4,7 @@ namespace NeatParser
 {
     /// <summary>
     /// Interface for the layout editor. Allows a column to edit the layout mid-parse.
+    /// WARNING: Layout editors can only edit columns to the right of themselves.
     /// </summary>
     public interface ILayoutEditor
     {
