@@ -50,7 +50,7 @@ namespace NeatParser
             {
                 string message =
                     Invariant(
-                        $"Unable to extract field from data buffer.\r\nData Buffer='{dataBuffer.ToString()}'\r\nFieldLength='{lengthOfLengthField}'");
+                        $"Unable to extract field from data buffer. FieldLength='{lengthOfLengthField}' Data Buffer='{dataBuffer.ToString()}'");
                 throw new NeatParserException(message, ex);
             }
         }
