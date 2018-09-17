@@ -24,6 +24,9 @@ namespace NeatParser
             if (sb == null)
                 throw new ArgumentNullException(nameof(sb));
 
+            if (string.IsNullOrEmpty(sb.ToString()))
+                throw new ArgumentNullException("The string builder contents were null or empty. Contents='" + sb + "'");
+
             if (startIndex < 0)
                 throw new ArgumentException(nameof(startIndex));
 

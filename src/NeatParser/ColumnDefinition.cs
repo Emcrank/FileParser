@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using static System.FormattableString;
 
 namespace NeatParser
 {
@@ -116,7 +116,7 @@ namespace NeatParser
             }
             catch(Exception ex) when(ex is OverflowException || ex is ArgumentNullException)
             {
-                throw new NeatParserException(ex);
+                throw new NeatParserException(Invariant($"An error occured when trying to convert the value '{value}' to type '{typeof(T).FullName}'."), ex);
             }
         }
 
