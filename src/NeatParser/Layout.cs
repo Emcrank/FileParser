@@ -71,11 +71,13 @@ namespace NeatParser
 
         /// <summary>
         ///     Initializes a <see cref="Layout" /> instance.
+        /// NOTE: A new instance of Layout should be used for each instance of NeatParser.
         /// </summary>
         public Layout() : this(string.Concat("Layout_", Path.GetRandomFileName())) { }
 
         /// <summary>
         ///     Initializes a <see cref="Layout" /> instance with specified layout name.
+        /// NOTE: A new instance of Layout should be used for each instance of NeatParser.
         /// </summary>
         /// <param name="layoutName">The name for the layout.</param>
         /// <param name="columnDelimiter">Optional delimiter which columns are delimited by (Applies to all columns).</param>
