@@ -4,7 +4,7 @@
     {
         internal const string SortCodeColumnName = "BeneficiaryCreditInstitution";
         internal const string Narrative1ColumnName = "OriginatingCustomerAccountName";
-        internal const string Narrative2ColumnName = "BeneficiaryCustomerAccountName";
+        internal const string Narrative2ColumnName = "ReferenceInformation";
         internal const string AmountColumnName = "Amount";
         internal const string PaymentDateColumnName = "SettlementDate";
         internal const string AccountNumberColumnName = "BeneficiaryCustomerAccountNumber";
@@ -65,7 +65,7 @@
                 new DummyColumn("OriginalAmount").AddMetadata(ColumnAssignedNumber, 4),
                 new FixedLengthSpace(14));
             layout.AddColumn(
-                new ColumnDefinition<int>(AmountColumnName).AddMetadata(ColumnAssignedNumber, 6),
+                new ColumnDefinition<int>(AmountColumnName, true).AddMetadata(ColumnAssignedNumber, 6),
                 new FixedLengthSpace(14));
             layout.AddColumn(
                 new DummyColumn("ExchangeRate").AddMetadata(ColumnAssignedNumber, 10),
@@ -74,7 +74,7 @@
                 new DummyColumn("DateSent").AddMetadata(ColumnAssignedNumber, 12),
                 new FixedLengthSpace(8));
             layout.AddColumn(
-                new DateTimeColumn(PaymentDateColumnName, "yyyyMMdd").AddMetadata(ColumnAssignedNumber, 15),
+                new DateTimeColumn(PaymentDateColumnName, "yyyyMMdd", true).AddMetadata(ColumnAssignedNumber, 15),
                 new FixedLengthSpace(8));
             layout.AddColumn(
                 new DummyColumn("ActionCode").AddMetadata(ColumnAssignedNumber, 26),
@@ -92,7 +92,7 @@
                 new DummyColumn("SubmittingMember").AddMetadata(ColumnAssignedNumber, 32),
                 new VariableLengthSpace(2));
             layout.AddColumn(
-                new StringColumn(AccountNumberColumnName).AddMetadata(ColumnAssignedNumber, 35),
+                new StringColumn(AccountNumberColumnName, true).AddMetadata(ColumnAssignedNumber, 35),
                 new VariableLengthSpace(2));
             layout.AddColumn(
                 new DummyColumn("OriginatingCreditInstitution").AddMetadata(ColumnAssignedNumber, 42),
@@ -122,7 +122,7 @@
                 new DummyColumn("FileId").AddMetadata(ColumnAssignedNumber, 72),
                 new VariableLengthSpace(3));
             layout.AddColumn(
-                new StringColumn(SortCodeColumnName).AddMetadata(ColumnAssignedNumber, 95),
+                new StringColumn(SortCodeColumnName, true).AddMetadata(ColumnAssignedNumber, 95),
                 new VariableLengthSpace(2));
             layout.AddColumn(
                 new DummyColumn("SendingFPSInstitution").AddMetadata(ColumnAssignedNumber, 98),
@@ -137,13 +137,13 @@
                 new DummyColumn("OriginatingCustomerAccountAddress").AddMetadata(ColumnAssignedNumber, 117),
                 new VariableLengthSpace(3));
             layout.AddColumn(
-                new StringColumn(Narrative2ColumnName).AddMetadata(ColumnAssignedNumber, 118),
+                new DummyColumn("BeneficiaryCustomerAccountName").AddMetadata(ColumnAssignedNumber, 118),
                 new VariableLengthSpace(3));
             layout.AddColumn(
                 new DummyColumn("BeneficiaryCustomerAccountAddress").AddMetadata(ColumnAssignedNumber, 119),
                 new VariableLengthSpace(3));
             layout.AddColumn(
-                new DummyColumn("ReferenceInformation").AddMetadata(ColumnAssignedNumber, 120),
+                new StringColumn(Narrative2ColumnName).AddMetadata(ColumnAssignedNumber, 120),
                 new VariableLengthSpace(3));
             layout.AddColumn(
                 new DummyColumn("RemittanceInformation").AddMetadata(ColumnAssignedNumber, 121),

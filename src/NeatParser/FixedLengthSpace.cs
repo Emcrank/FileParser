@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using static System.FormattableString;
 
 namespace NeatParser
 {
@@ -34,7 +35,10 @@ namespace NeatParser
             }
             catch (Exception ex) when (ex is OverflowException || ex is FormatException || ex is ArgumentException)
             {
-                throw new NeatParserException("Unable to extract field from data buffer.", ex);
+                string message =
+                    Invariant(
+                        $"Unable to extract field from data buffer.\r\nData Buffer='{dataBuffer.ToString()}'\r\nFieldLength='{fieldLength}'");
+                throw new NeatParserException(message, ex);
             }
         }
     }

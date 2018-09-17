@@ -99,7 +99,7 @@ namespace NeatParser
             {
                 return NextInternal();
             }
-            catch(Exception ex) when(ex is IOException)
+            catch(IOException ex)
             {
                 throw new NeatParserException(ex);
             }

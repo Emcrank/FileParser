@@ -181,7 +181,7 @@ namespace NeatParser.UnitTests
                 Assert.AreEqual("00000199", values[LayoutFactory.AccountNumberColumnName]);
                 Assert.AreEqual("134001", values[LayoutFactory.SortCodeColumnName]);
                 Assert.AreEqual("S YZXTH", values[LayoutFactory.Narrative1ColumnName]);
-                Assert.AreEqual("XXXXYYYY & XILJLPK", values[LayoutFactory.Narrative2ColumnName]);
+                Assert.AreEqual("1746917608", values[LayoutFactory.Narrative2ColumnName]);
 
                 Assert.IsTrue(parser.Next());
                 values = parser.Take();
@@ -190,7 +190,7 @@ namespace NeatParser.UnitTests
                 Assert.AreEqual("00027303", values[LayoutFactory.AccountNumberColumnName]);
                 Assert.AreEqual("134001", values[LayoutFactory.SortCodeColumnName]);
                 Assert.AreEqual("E POIU", values[LayoutFactory.Narrative1ColumnName]);
-                Assert.AreEqual("XYXYXYXY ZZZXXXX", values[LayoutFactory.Narrative2ColumnName]);
+                Assert.AreEqual("1315838910-02", values[LayoutFactory.Narrative2ColumnName]);
             }
         }
 
