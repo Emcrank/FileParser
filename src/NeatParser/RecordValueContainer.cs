@@ -16,6 +16,7 @@ namespace NeatParser
 
         /// <summary>
         ///     Gets the value that corresponds to the column.
+        ///     If the column definition in the layout has the property 'IsRequired' set to 'true' then this will throw an exception if the value is null/default(T).
         /// </summary>
         /// <param name="columnName">Name of the column</param>
         /// <returns>Dynamic value of specified column.</returns>
