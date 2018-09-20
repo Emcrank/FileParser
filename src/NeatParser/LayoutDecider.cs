@@ -24,10 +24,10 @@ namespace NeatParser
         /// <summary>
         /// Constructs a new instance of the <see cref="LayoutDecider"/> class.
         /// </summary>
-        /// <param name="layout"></param>
-        public LayoutDecider(Layout layout)
+        /// <param name="defaultLayout"></param>
+        public LayoutDecider(Layout defaultLayout)
         {
-            AssignDefault(layout);
+            AssignDefault(defaultLayout);
         }
 
         /// <summary>
