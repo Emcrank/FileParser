@@ -20,15 +20,15 @@ namespace NeatParser.UnitTests
 
         private static string BacsTestData => new StringBuilder()
             .AppendLine(
-                @"VOL1623187                           ****999999                                3                                                ")
+                @"VOL1101212                           ****999999                                3                                                ")
             .AppendLine(
                 @"HDR1 A999999S   999999                 F     01 18164              18173                                                        ")
             .AppendLine(
-                @"UHL1 18164623187    00000000         000              CLIENTNAME                                                                ")
+                @"UHL1 18164101212    00000000         000              CLIENTNAME                                                                ")
             .AppendLine(
-                @"6231878014026209960708010025847000000000016216JP157084A DWP SMI 999999-9999999    12345678           27358901509F6F             ")
+                @"1012128014026209960708010025847000000000016216XX157084A XXX YYY 999999-9999999    12345678           27358901509F6F             ")
             .AppendLine(
-                @"6231878014026209960708010025847000000000032428JM071783D DWP SMI 888888-88888-08                      27358901509F70             ")
+                @"1012128014026209960708010025847000000000032428XX071783D XXX YYY 888888-88888-08                      27358901509F70             ")
             .Append(
                 @"UTL28932398748732835                                                                                                            ")
             .ToString();
@@ -209,7 +209,7 @@ namespace NeatParser.UnitTests
                 Assert.IsTrue(parser.Next());
 
                 string sortCode = parser.Take()["SortCode"];
-                Assert.AreEqual("623187", sortCode);
+                Assert.AreEqual("101212", sortCode);
             }
         }
 
@@ -229,11 +229,11 @@ namespace NeatParser.UnitTests
 
                 var values = parser.Take();
 
-                Assert.AreEqual("623187", values["SortCode"]);
+                Assert.AreEqual("101212", values["SortCode"]);
                 Assert.AreEqual("80140262", values["AccountNumber"]);
                 Assert.AreEqual("99", values["TransactionCode"]);
                 Assert.AreEqual(16216, values["Amount"]);
-                Assert.AreEqual("JP157084A DWP SMI", values["RemittersName"]);
+                Assert.AreEqual("XX157084A XXX YYY", values["RemittersName"]);
                 Assert.AreEqual("999999-9999999", values["RemittersReferenceNumber"]);
             }
         }
@@ -252,11 +252,11 @@ namespace NeatParser.UnitTests
                 Assert.IsTrue(parser.Next());
                 var values = parser.Take();
 
-                Assert.AreEqual("623187", values["SortCode"]);
+                Assert.AreEqual("101212", values["SortCode"]);
                 Assert.AreEqual("80140262", values["AccountNumber"]);
                 Assert.AreEqual("99", values["TransactionCode"]);
                 Assert.AreEqual(32428, values["Amount"]);
-                Assert.AreEqual("JM071783D DWP SMI", values["RemittersName"]);
+                Assert.AreEqual("XX071783D XXX YYY", values["RemittersName"]);
                 Assert.AreEqual("888888-88888-08", values["RemittersReferenceNumber"]);
             }
         }
@@ -283,19 +283,19 @@ namespace NeatParser.UnitTests
                 rowData.Add(parser.Take());
 
                 var values = rowData[0];
-                Assert.AreEqual("623187", values["SortCode"]);
+                Assert.AreEqual("101212", values["SortCode"]);
                 Assert.AreEqual("80140262", values["AccountNumber"]);
                 Assert.AreEqual("99", values["TransactionCode"]);
                 Assert.AreEqual(16216, values["Amount"]);
-                Assert.AreEqual("JP157084A DWP SMI", values["RemittersName"]);
+                Assert.AreEqual("XX157084A XXX YYY", values["RemittersName"]);
                 Assert.AreEqual("999999-9999999", values["RemittersReferenceNumber"]);
 
                 values = rowData[1];
-                Assert.AreEqual("623187", values["SortCode"]);
+                Assert.AreEqual("101212", values["SortCode"]);
                 Assert.AreEqual("80140262", values["AccountNumber"]);
                 Assert.AreEqual("99", values["TransactionCode"]);
                 Assert.AreEqual(32428, values["Amount"]);
-                Assert.AreEqual("JM071783D DWP SMI", values["RemittersName"]);
+                Assert.AreEqual("XX071783D XXX YYY", values["RemittersName"]);
                 Assert.AreEqual("888888-88888-08", values["RemittersReferenceNumber"]);
 
                 Assert.IsFalse(parser.Next());
