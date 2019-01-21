@@ -10,9 +10,9 @@ A library for parsing files.
 **For Example, given a file in the below format:**
 
     HEADER
-    	1COLUMN1,1COLUMN2,1COLUMN3,1COLUMN4,1COLUMN5,
-    	2COLUMN1,2COLUMN2,2COLUMN3,2COLUMN4,2COLUMN5,
-    	3COLUMN1,3COLUMN2,3COLUMN3,3COLUMN4,3COLUMN5,
+   	1COLUMN1,1COLUMN2,1COLUMN3,1COLUMN4,1COLUMN5,
+   	2COLUMN1,2COLUMN2,2COLUMN3,2COLUMN4,2COLUMN5,
+   	3COLUMN1,3COLUMN2,3COLUMN3,3COLUMN4,3COLUMN5,
 
 **To configure a layout that met the specification of this file, it would be:**
 ```csharp
