@@ -1,25 +1,20 @@
 # NeatParser
 A library for parsing files.
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<h2 style="padding-left: 40px;"><span style="text-decoration: underline;"><strong>Parsing a delimited file</strong></span></h2>
-<p style="padding-left: 60px;">1. Define layout.</p>
-<p style="padding-left: 60px;">2. Instantiate parser options. (Optional)</p>
-<p style="padding-left: 60px;">3. Instantiate parser and take the record values.</p>
-<p style="padding-left: 60px;">&nbsp;</p>
-<p style="padding-left: 60px;">For example:</p>
-<p style="padding-left: 60px;">&nbsp;</p>
-<p style="padding-left: 60px;"><strong>Given an example delimited file</strong></p>
 
-```csharp
-	HEADER
-	1COLUMN1,1COLUMN2,1COLUMN3,1COLUMN4,1COLUMN5,
-	2COLUMN1,2COLUMN2,2COLUMN3,2COLUMN4,2COLUMN5,
-	3COLUMN1,3COLUMN2,3COLUMN3,3COLUMN4,3COLUMN5,
-```
+## Parsing a delimited file
 
-<p style="padding-left: 60px;"><strong>To configure a layout that met the specification of this file, it would be:</strong></p>
+ 1. Define the file layout using the layout class.
+ 2. Instantiate parser options (Optional).
+ 3. Instantiate parser and read values.
 
+**For Example, given a file in the below format:**
+
+    HEADER
+    	1COLUMN1,1COLUMN2,1COLUMN3,1COLUMN4,1COLUMN5,
+    	2COLUMN1,2COLUMN2,2COLUMN3,2COLUMN4,2COLUMN5,
+    	3COLUMN1,3COLUMN2,3COLUMN3,3COLUMN4,3COLUMN5,
+
+**To configure a layout that met the specification of this file, it would be:**
 ```csharp
 internal static Layout CreateExampleLayout()
 {
@@ -34,8 +29,8 @@ internal static Layout CreateExampleLayout()
 }
 ```
 
-<p style="padding-left: 60px;"><strong>To then read each record from that file:</strong></p>
-<p style="padding-left: 60px;"><strong>First create the options for the parser...</strong></p>
+**To then read each record from that file:**
+**Instantiate an instance of `NeatParserOptions` if required.**
 
 ```csharp
 var options = new NeatParserOptions()
@@ -46,7 +41,9 @@ var options = new NeatParserOptions()
 	SkipFirst = 1
 };
 ```
-<p style="padding-left: 60px;"><strong>Next create the NeatParser instance and pass the required parameters including the options and layout.</strong></p>
+**Next create the `NeatParser` instance and pass the required parameters including the options and layout.**
+If you do not require custom options, use 
+`new NeatParser(exampleFileReader, layout);` constructor instead.
 
 ```csharp
 using(var exampleFileReader = new StreamReader("exampleFile.csv"))
@@ -69,4 +66,5 @@ using(var exampleFileReader = new StreamReader("exampleFile.csv"))
 	}
 }
 ```
-
+Using the `NeatParser.Take()` method, you can retrieve the values for each line.
+If you wish not to use a loop with `while(NeatParser.Next())`, there is also the `NeatParser.TakeNext()` method which will take the values for the current line and advance the reader by one record.
